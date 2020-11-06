@@ -1,0 +1,22 @@
+{
+  "name": "devops-toolbox-app",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codex-team/devops-toolbox-app.git"
+  },
+  "author": "CodeX",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/codex-team/devops-toolbox-app/issues"
+  },
+  "homepage": "https://github.com/codex-team/devops-toolbox-app#readme",
+  "dependencies": {
+    "electron": "^10.1.5"
+  }
+}
