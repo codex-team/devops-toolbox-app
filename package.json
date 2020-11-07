@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "electron": "electron index.js"
+    "dev": "electron src/index.ts",
+    "bulid": "tsc",
+    "lint": "eslint ./src",
+    "lint:fix": "eslint ./src --fix"
   },
   "repository": {
     "type": "git",
@@ -17,6 +20,12 @@
   },
   "homepage": "https://github.com/codex-team/devops-toolbox-app#readme",
   "dependencies": {
-    "electron": "^10.1.5"
+    "electron": "^10.1.5",
+    "typescript": "^4.0.5"
+  },
+  "devDependencies": {
+    "eslint": "^7.13.0",
+    "eslint-config-codex": "github:codex-team/eslint-config",
+    "ts-node": "^9.0.0"
   }
 }
