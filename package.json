@@ -7,7 +7,10 @@
     "dev": "electron src/index.ts",
     "bulid": "tsc",
     "lint": "eslint ./src",
-    "lint:fix": "eslint ./src --fix"
+    "lint:fix": "eslint ./src --fix",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder",
+    "postinstall": "electron-builder install-app-deps"
   },
   "repository": {
     "type": "git",
