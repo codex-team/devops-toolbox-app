@@ -1,5 +1,4 @@
-import electron from 'electron';
-
+const electron = require('electron');
 const { app, BrowserWindow } = electron;
 
 const { autoUpdater } = require('electron-updater');
