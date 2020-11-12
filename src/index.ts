@@ -37,6 +37,6 @@ app.on('ready', () => {
    */
   setInterval(() => {
     autoUpdater.checkForUpdates();
-  }, 10 * 60 * 1000);
+  }, 60 * 1000);
 
 });
