@@ -27,8 +27,8 @@ app.on('ready', () => {
   /**
    * Actions after a successful update download
    */
-  autoUpdater.on('update-downloaded', (updateInfo: any) => {
-    logger.log('Update is ready: ', updateInfo);
+  autoUpdater.on('update-downloaded', () => {
+    // logger.log('Update is ready: ', updateInfo);
     autoUpdater.quitAndInstall();
   });
 
