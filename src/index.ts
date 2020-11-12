@@ -1,10 +1,12 @@
 const electron = require('electron');
 const { app, BrowserWindow } = electron;
+const path = require('path');
 
 const { autoUpdater } = require('electron-updater');
 const logger = require('electron-log');
 logger.transports.file.level = 'info';
 logger.transports.file.file = __dirname + '..' + 'log.log';
+const url = require('url');
 
 let mainWindow;
 
@@ -12,7 +14,11 @@ app.on('ready', () => {
   mainWindow = new BrowserWindow({
 
   });
-  mainWindow.loadURL(`${process.cwd()}/public/index.html`);
+  mainWindow.loadURL(url.format({
+    pathname: path.join(__dirname, '../public/index.html'),
+    protocol: 'file:',
+    slashes: true
+  }));
 
   /**
    * Auto-updater
