@@ -1,5 +1,6 @@
 {
   "extends": [
-	  "codex"
+    "codex",
+    "plugin:vue/recommended"
   ]
 }

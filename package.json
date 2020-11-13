@@ -7,7 +7,9 @@
     "dev": "electron src/index.ts",
     "bulid": "tsc",
     "lint": "eslint ./src",
-    "lint:fix": "eslint ./src --fix"
+    "lint:fix": "eslint ./src --fix",
+    "serve": "vue-cli-service serve",
+    "build-vue": "vue-cli-service build"
   },
   "repository": {
     "type": "git",
@@ -22,11 +24,18 @@
   "dependencies": {
     "electron": "^10.1.5",
     "typescript": "^4.0.5",
-    "vue": "^2.6.12"
+    "vue": "^3.0.2",
+    "core-js": "^3.6.5"
   },
   "devDependencies": {
     "eslint": "^7.13.0",
     "eslint-config-codex": "github:codex-team/eslint-config",
-    "ts-node": "^9.0.0"
+    "eslint-plugin-vue": "^7.0.0-0",
+    "ts-node": "^9.0.0",
+    "@vue/cli-plugin-babel": "~4.5.0",
+    "@vue/cli-plugin-eslint": "~4.5.0",
+    "@vue/cli-service": "~4.5.0",
+    "@vue/compiler-sfc": "^3.0.0",
+    "babel-eslint": "^10.1.0"
   }
 }
