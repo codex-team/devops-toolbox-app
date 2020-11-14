@@ -2,6 +2,7 @@ import { app, protocol, BrowserWindow } from 'electron';
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib';
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer';
 const isDevelopment = process.env.NODE_ENV !== 'production';
+const protocolName = 'app';
 
 /**
  * Scheme must be registered before the app is ready
@@ -34,8 +35,8 @@ async function createWindow(): Promise<void> {
       win.webContents.openDevTools();
     }
   } else {
-    createProtocol('app');
-    await win.loadURL('app://./index.html');
+    createProtocol(protocolName);
+    await win.loadURL(`${protocolName}://./index.html`);
   }
 }
 
