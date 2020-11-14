@@ -2,40 +2,52 @@
   "name": "devops-toolbox-app",
   "version": "0.0.1",
   "description": "",
-  "main": "index.js",
-  "scripts": {
-    "dev": "electron src/index.ts",
-    "bulid": "tsc",
-    "lint": "eslint ./src",
-    "lint:fix": "eslint ./src --fix",
-    "serve": "vue-cli-service serve",
-    "build-vue": "vue-cli-service build"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/codex-team/devops-toolbox-app.git"
-  },
   "author": "CodeX",
-  "license": "UNLICENSED",
-  "bugs": {
-    "url": "https://github.com/codex-team/devops-toolbox-app/issues"
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "tsc",
+    "lint": "eslint ./src",
+    "build-vue": "vue-cli-service build",
+    "dev": "electron src/index.ts",
+    "electron:build": "vue-cli-service electron:build",
+    "electron:serve": "vue-cli-service electron:serve",
+    "lint:fix": "eslint ./src --fix",
+    "postinstall": "electron-builder install-app-deps",
+    "postuninstall": "electron-builder install-app-deps"
   },
-  "homepage": "https://github.com/codex-team/devops-toolbox-app#readme",
+  "main": "index.js",
   "dependencies": {
+    "core-js": "^3.6.5",
     "electron": "^10.1.5",
     "typescript": "^4.0.5",
-    "vue": "^3.0.2",
-    "core-js": "^3.6.5"
+    "vue": "^3.0.2"
   },
   "devDependencies": {
+    "@types/electron-devtools-installer": "^2.2.0",
+    "@typescript-eslint/eslint-plugin": "^2.33.0",
+    "@typescript-eslint/parser": "^2.33.0",
+    "@vue/cli-plugin-babel": "~4.5.0",
+    "@vue/cli-plugin-eslint": "~4.5.0",
+    "@vue/cli-plugin-typescript": "^4.5.8",
+    "@vue/cli-service": "~4.5.0",
+    "@vue/compiler-sfc": "^3.0.0",
+    "@vue/eslint-config-typescript": "^5.0.2",
+    "babel-eslint": "^10.1.0",
+    "electron": "^9.0.0",
+    "electron-devtools-installer": "^3.1.0",
     "eslint": "^7.13.0",
     "eslint-config-codex": "github:codex-team/eslint-config",
     "eslint-plugin-vue": "^7.0.0-0",
     "ts-node": "^9.0.0",
-    "@vue/cli-plugin-babel": "~4.5.0",
-    "@vue/cli-plugin-eslint": "~4.5.0",
-    "@vue/cli-service": "~4.5.0",
-    "@vue/compiler-sfc": "^3.0.0",
-    "babel-eslint": "^10.1.0"
+    "vue-cli-plugin-electron-builder": "~2.0.0-rc.5"
+  },
+  "bugs": {
+    "url": "https://github.com/codex-team/devops-toolbox-app/issues"
+  },
+  "homepage": "https://github.com/codex-team/devops-toolbox-app#readme",
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codex-team/devops-toolbox-app.git"
   }
 }

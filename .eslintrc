@@ -1,6 +1,10 @@
 {
   "extends": [
     "codex",
-    "plugin:vue/recommended"
-  ]
+    "plugin:vue/recommended",
+    "@vue/typescript"
+  ],
+  "parserOptions": {
+    "parser": "@typescript-eslint/parser"
+  }
 }
