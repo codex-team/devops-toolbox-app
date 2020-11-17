@@ -1,5 +1,4 @@
 import electron from 'electron';
-
 const { app, BrowserWindow } = electron;
 
 let mainWindow;
