@@ -1,9 +1,108 @@
 <template>
-  <h1>devops-toolbox-app</h1>
+  <div class="container">
+    <WorkspaceHeader
+      :name="name"
+      :image="image"
+    />
+    <Server
+      v-for="(server, index) in servers"
+      :key="server.name"
+      :name="server.name"
+      :projects="server.projects"
+      :hotkey="index+1"
+    />
+  </div>
 </template>
 
 <script lang="ts">
-export default {
+import { defineComponent } from 'vue';
+import Server from '@/components/Server.vue';
+import WorkspaceHeader from '@/components/WorkspaceHeader.vue';
+
+export default defineComponent({
   name: 'App',
-};
+  components: {
+    WorkspaceHeader,
+    Server,
+  },
+  data() {
+    return {
+      name: 'CodeX',
+      image: 'https://avatars1.githubusercontent.com/u/16060815?s=60&v=4',
+      servers: [
+        {
+          name: 'Centaur',
+          projects: [
+            {
+              name: 'codex.so',
+              status: true,
+            },
+            {
+              name: 'editorjs.io',
+              status: true,
+            },
+            {
+              name: 'stage1.codex.so',
+              status: false,
+            },
+          ],
+        },
+        {
+          name: 'Neptune',
+          projects: [
+            {
+              name: 'api.notes.codex.so',
+              status: true,
+            },
+            {
+              name: 'media.codex.so',
+              status: true,
+            },
+            {
+              name: 'featmap.codex.so',
+              status: true,
+            },
+          ],
+        },
+        {
+          name: 'Hawk Workers',
+          projects: [
+            {
+              name: 'Grouper',
+              status: true,
+            },
+            {
+              name: 'Source Map Worker',
+              status: true,
+            },
+          ],
+        },
+      ],
+    };
+  },
+});
 </script>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+#app {
+  width: 100%;
+  height: 100vh;
+  padding: 0 1px 2px;
+  object-fit: contain;
+  box-shadow: inset 0 0 4px 0 rgba(116, 174, 255, 0.25);
+  border: solid 1px rgba(0, 0, 0, 0.1);
+  background-color: #294068;
+}
+
+.container {
+  height: 100%;
+  padding-left: 15px;
+  padding-right: 17px;
+}
+
+</style>
