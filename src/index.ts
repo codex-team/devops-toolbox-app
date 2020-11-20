@@ -51,32 +51,6 @@ async function createWindow(): Promise<void> {
   }
 }
 
-  });
-  mainWindow.loadURL(url.format({
-    pathname: path.join(__dirname, '../public/index.html'),
-    protocol: 'file:',
-    slashes: true
-  }));
-
-  /**
-   * Auto-updater
-   */
-
-  /**
-   * Actions after a successful update download
-   */
-  autoUpdater.on('update-downloaded', () => {
-    // logger.log('Update is ready: ', updateInfo);
-    autoUpdater.quitAndInstall();
-  });
-
-  /**
-   * Regularly checking for updates (current interval: 10 min)
-   */
-  setInterval(() => {
-    autoUpdater.checkForUpdates();
-  }, 60 * 1000);
-
 /**
  * Quit when all windows are closed.
  * On macOS it is common for applications and their menu bar
@@ -112,6 +86,21 @@ app.on('ready', async () => {
     }
   }
   await createWindow();
+
+  /**
+   * Regularly checking for updates (current interval: 10 min)
+   */
+  setInterval(() => {
+    autoUpdater.checkForUpdates();
+  }, 60 * 1000);
+
+  /**
+   * Actions after a successful update download
+   */
+  autoUpdater.on('update-downloaded', () => {
+    // logger.log('Update is ready: ', updateInfo);
+    autoUpdater.quitAndInstall();
+  });
 });
 
 /**
