@@ -1,15 +1,10 @@
-const electron = require('electron');
-const { app, BrowserWindow } = electron;
-const path = require('path');
-
-const { autoUpdater } = require('electron-updater');
-const logger = require('electron-log');
-logger.transports.file.level = 'info';
-logger.transports.file.file = __dirname + '..' + 'log.log';
-const url = require('url');
 import { app, protocol, BrowserWindow } from 'electron';
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib';
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer';
+import { autoUpdater } from 'electron-updater';
+import logger from 'electron-log';
+
+logger.transports.file.level = 'info';
 
 /**
  * Node environment
