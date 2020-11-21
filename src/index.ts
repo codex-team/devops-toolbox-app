@@ -39,7 +39,8 @@ async function createWindow(): Promise<void> {
     resizable: false,
     show: false,
     webPreferences: {
-      nodeIntegration: !!process.env.ELECTRON_NODE_INTEGRATION,
+      nodeIntegration: true,
+      enableRemoteModule: true,
     },
   });
 
