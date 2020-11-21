@@ -83,13 +83,20 @@ export default defineComponent({
 });
 </script>
 <style>
+@import './styles/variables.css';
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+body {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
+}
+
 #app {
+  overflow-y: scroll;
   width: 100%;
   height: 100vh;
   padding: 0 1px 2px;
@@ -97,6 +104,10 @@ export default defineComponent({
   box-shadow: inset 0 0 4px 0 rgba(116, 174, 255, 0.25);
   border: solid 1px rgba(0, 0, 0, 0.1);
   background-color: #294068;
+}
+
+#app::-webkit-scrollbar {
+  display: none;
 }
 
 .container {

@@ -6,7 +6,7 @@
         >.
       </div>
       <div class="server-hotkey">
-        ⌘{{ hotkey }}
+        {{ platformHotkey }}
       </div>
     </header>
     <Project
@@ -20,6 +20,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { remote } from 'electron';
 import Project from './Project.vue';
 
 export default defineComponent({
@@ -28,17 +29,36 @@ export default defineComponent({
     Project,
   },
   props: {
+    /**
+     * Server name
+     */
     name: {
       type: String,
       required: true,
     },
+    /**
+     * Server`s project name
+     */
     projects: {
       type: Array,
       required: true,
     },
+    /**
+     * Server`s hotkey
+     */
     hotkey: {
       type: Number,
       required: true,
+    },
+  },
+  computed: {
+    /**
+     * Server`s hotkey depended on platform
+     *
+     * @returns {string}
+     */
+    platformHotkey(): string {
+      return (remote.process.platform === 'darwin' ? '⌘' : 'Ctrl+') + this.hotkey;
     },
   },
 });
@@ -48,15 +68,21 @@ export default defineComponent({
 
 .server {
   margin-bottom: 14px;
-}
 
-.server-header {
-  display: flex;
-  align-items: center;
-  font-size: 14px;
-  font-weight: bold;
-  color: #ffffff;
-  margin-bottom: 10px;
+  &-header {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    font-weight: bold;
+    color: var(--color-text-header);
+    margin-bottom: 10px;
+  }
+
+  &-hotkey {
+    margin-left: auto;
+    letter-spacing: 0.35px;
+    color: var(--color-text-second);
+  }
 }
 
 .bash {
@@ -72,9 +98,4 @@ export default defineComponent({
   color: #ffffff;
 }
 
-.server-hotkey {
-  margin-left: auto;
-  letter-spacing: 0.35px;
-  color: #cadafb;
-}
 </style>
