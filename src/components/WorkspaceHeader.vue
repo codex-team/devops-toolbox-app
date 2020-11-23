@@ -1,7 +1,7 @@
 <template>
   <header class="header">
     <img
-      class="header-image"
+      class="header__image"
       :src="image"
       :alt="name"
     >
@@ -45,7 +45,7 @@ export default defineComponent({
   font-weight: bold;
   color: var(--color-text-header);
 
-  &-image {
+  &__image {
     width: 24px;
     height: 24px;
     margin-right: 10px;
