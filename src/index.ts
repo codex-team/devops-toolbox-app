@@ -38,6 +38,7 @@ async function createWindow(): Promise<void> {
     frame: false,
     resizable: false,
     show: false,
+    transparent: true,
     webPreferences: {
       nodeIntegration: true,
       enableRemoteModule: true,
