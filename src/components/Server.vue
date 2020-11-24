@@ -2,7 +2,10 @@
   <div class="server">
     <header class="server-header">
       {{ name }}
-      <div class="bash">
+      <div
+        class="bash"
+        @click="openTerminal"
+      >
         >.
       </div>
       <div class="server-hotkey">
@@ -96,6 +99,10 @@ export default defineComponent({
   font-weight: 900;
   letter-spacing: -0.3px;
   color: #ffffff;
+
+  &:hover {
+  cursor: pointer;
+   }
 }
 
 </style>
