@@ -1,11 +1,11 @@
 <template>
   <div class="server">
-    <header class="server-header">
+    <header class="server__header">
       {{ name }}
       <div class="bash">
         >.
       </div>
-      <div class="server-hotkey">
+      <div class="server__hotkey">
         {{ platformHotkey }}
       </div>
     </header>
@@ -69,7 +69,7 @@ export default defineComponent({
 .server {
   margin-bottom: 14px;
 
-  &-header {
+  &__header {
     display: flex;
     align-items: center;
     font-size: 14px;
@@ -78,7 +78,7 @@ export default defineComponent({
     margin-bottom: 10px;
   }
 
-  &-hotkey {
+  &__hotkey {
     margin-left: auto;
     letter-spacing: 0.35px;
     color: var(--color-text-second);
