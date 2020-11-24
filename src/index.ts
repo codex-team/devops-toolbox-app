@@ -1,7 +1,11 @@
-import { app, protocol, BrowserWindow } from 'electron';
+import { app, protocol, BrowserWindow, Tray } from 'electron';
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib';
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer';
 
+/**
+ * Tray element
+ */
+let tray;
 /**
  * Node environment
  */
@@ -29,22 +33,48 @@ protocol.registerSchemesAsPrivileged([
  */
 async function createWindow(): Promise<void> {
   const win = new BrowserWindow({
-    width: 800,
-    height: 600,
+    height: 352,
+    width: 260,
+    frame: false,
+    resizable: false,
+    show: false,
+    transparent: true,
     webPreferences: {
-      nodeIntegration: !!process.env.ELECTRON_NODE_INTEGRATION,
+      nodeIntegration: true,
+      enableRemoteModule: true,
     },
   });
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     await win.loadURL(process.env.WEBPACK_DEV_SERVER_URL);
-    if (!process.env.IS_TEST) {
-      win.webContents.openDevTools();
-    }
   } else {
     createProtocol(protocolName);
     await win.loadURL(`${protocolName}://./index.html`);
   }
+  const iconName = process.platform === 'win32' ? 'front.png' : 'front-mac.png';
+  const iconPath = `src/assets/images/${iconName}`;
+
+  tray = new Tray(iconPath);
+  tray.on('click', (event, bounds) => {
+    // click event bounds
+    const { x, y } = bounds;
+    // window height and width
+    const { height, width } = win.getBounds();
+
+    if (win.isVisible()) {
+      win.hide();
+    } else {
+      const yPosition = process.platform === 'darwin' ? y : y - height;
+
+      win.setBounds({
+        x: x - width / 2,
+        y: yPosition,
+        height,
+        width,
+      });
+      win.show();
+    }
+  });
 }
 
 /**
