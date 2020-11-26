@@ -48,11 +48,7 @@ async function createWindow(): Promise<void> {
     },
   });
 
-  // win.setAlwaysOnTop(true)
-
   win.webContents.on('before-input-event', (event, input) => {
-    // , sidebar, medium-light, , , , , hud, , , , under-window и under-page
-
     let vibrancy = 'dark';
 
     switch (input.key) {
