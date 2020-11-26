@@ -32,7 +32,7 @@ protocol.registerSchemesAsPrivileged([
  * Creating window
  */
 async function createWindow(): Promise<void> {
-  const win = new BrowserWindow({
+  const win: BrowserWindow = new BrowserWindow({
     height: 352,
     width: 260,
     frame: false,
@@ -40,61 +40,12 @@ async function createWindow(): Promise<void> {
     show: false,
     transparent: true,
     type: 'textured',
-    vibrancy: 'popover',
+    vibrancy: 'dark',
     visualEffectState: 'active',
     webPreferences: {
       nodeIntegration: true,
       enableRemoteModule: true,
     },
-  });
-
-  win.webContents.on('before-input-event', (event, input) => {
-    let vibrancy = 'dark';
-
-    switch (input.key) {
-      case 'a':
-        vibrancy = 'appearance-based';
-        break;
-      case 'l':
-        vibrancy = 'sidebar';
-        break;
-      case 'd':
-        vibrancy = 'dark';
-        break;
-      case 't':
-        vibrancy = 'hud';
-        break;
-      case 's':
-        vibrancy = 'under-window';
-        break;
-      case 'm':
-        vibrancy = 'menu';
-        break;
-      case 'p':
-        vibrancy = 'popover';
-        break;
-      case 'u':
-        vibrancy = 'ultra-dark';
-        break;
-      case 'h':
-        vibrancy = 'header';
-        break;
-      case 'w':
-        vibrancy = 'window';
-        break;
-      case 'f':
-        vibrancy = 'fullscreen-ui';
-        break;
-      case 'b':
-        vibrancy = 'tooltip';
-        break;
-      case 'c':
-        vibrancy = 'content';
-        break;
-    }
-
-    // @ts-ignore
-    win.setVibrancy(vibrancy);
   });
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {
