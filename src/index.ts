@@ -5,7 +5,7 @@ import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer';
 /**
  * Tray element
  */
-let tray;
+let tray: Tray;
 /**
  * Node environment
  */
@@ -39,10 +39,66 @@ async function createWindow(): Promise<void> {
     resizable: false,
     show: false,
     transparent: true,
+    type: 'textured',
+    vibrancy: 'popover',
+    visualEffectState: 'active',
     webPreferences: {
       nodeIntegration: true,
       enableRemoteModule: true,
     },
+  });
+
+  // win.setAlwaysOnTop(true)
+
+  win.webContents.on('before-input-event', (event, input) => {
+    // , sidebar, medium-light, , , , , hud, , , , under-window и under-page
+
+    let vibrancy = 'dark';
+
+    switch (input.key) {
+      case 'a':
+        vibrancy = 'appearance-based';
+        break;
+      case 'l':
+        vibrancy = 'sidebar';
+        break;
+      case 'd':
+        vibrancy = 'dark';
+        break;
+      case 't':
+        vibrancy = 'hud';
+        break;
+      case 's':
+        vibrancy = 'under-window';
+        break;
+      case 'm':
+        vibrancy = 'menu';
+        break;
+      case 'p':
+        vibrancy = 'popover';
+        break;
+      case 'u':
+        vibrancy = 'ultra-dark';
+        break;
+      case 'h':
+        vibrancy = 'header';
+        break;
+      case 'w':
+        vibrancy = 'window';
+        break;
+      case 'f':
+        vibrancy = 'fullscreen-ui';
+        break;
+      case 'b':
+        vibrancy = 'tooltip';
+        break;
+      case 'c':
+        vibrancy = 'content';
+        break;
+    }
+
+    // @ts-ignore
+    win.setVibrancy(vibrancy);
   });
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {
@@ -104,6 +160,10 @@ app.on('activate', async () => {
  * Some APIs can only be used after this event occurs.
  */
 app.on('ready', async () => {
+  if (app.dock) {
+    app.dock.hide();
+  }
+
   if (isDevelopment && !process.env.IS_TEST) {
     try {
       await installExtension(VUEJS_DEVTOOLS);
