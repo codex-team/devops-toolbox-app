@@ -1,11 +1,28 @@
-import { app, protocol, BrowserWindow, Tray, Menu } from 'electron';
+import { app, protocol, BrowserWindow, Tray, Menu, MenuItemConstructorOptions, MenuItem } from 'electron';
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib';
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer';
 
 /**
  * Tray element
  */
-let tray;
+let tray: Tray;
+
+/**
+ * Menu element creating
+ */
+
+const template: (MenuItemConstructorOptions| MenuItem)[] = [
+  {
+    label: 'About',
+    role: 'about',
+  },
+  {
+    label: 'Quit',
+    role: 'quit',
+  },
+];
+
+const menu = Menu.buildFromTemplate(template);
 /**
  * Node environment
  */
@@ -76,9 +93,9 @@ async function createWindow(): Promise<void> {
     }
   });
 
-  // tray.on('right-click', (event, bounds) => {
-  //   tray.popUpContextMenu(menu);
-  // });
+  tray.on('right-click', (event, bounds) => {
+    tray.popUpContextMenu(menu);
+  });
 }
 
 /**
@@ -116,20 +133,6 @@ app.on('ready', async () => {
     }
   }
   await createWindow();
-
-  const template = [
-    {
-      label: 'Reload',
-      role: 'reload',
-    },
-    {
-      label: 'CLose',
-      role: 'close',
-    },
-  ];
-
-  const menu = Menu.buildFromTemplate(template);
-
   tray.setContextMenu(menu);
 });
 
