@@ -8,22 +8,6 @@ import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer';
 let tray: Tray;
 
 /**
- * Menu element creating
- */
-
-const template: (MenuItemConstructorOptions| MenuItem)[] = [
-  {
-    label: 'About',
-    role: 'about',
-  },
-  {
-    label: 'Quit',
-    role: 'quit',
-  },
-];
-
-const menu = Menu.buildFromTemplate(template);
-/**
  * Node environment
  */
 const isDevelopment = process.env.NODE_ENV !== 'production';
@@ -73,9 +57,7 @@ async function createWindow(): Promise<void> {
 
   tray = new Tray(iconPath);
   tray.on('click', (event, bounds) => {
-    // click event bounds
     const { x, y } = bounds;
-    // window height and width
     const { height, width } = win.getBounds();
 
     if (win.isVisible()) {
@@ -92,8 +74,23 @@ async function createWindow(): Promise<void> {
       win.show();
     }
   });
+  /**
+   * Menu element creating
+   */
+  const template: (MenuItemConstructorOptions| MenuItem)[] = [
+    {
+      label: 'About',
+      role: 'about',
+    },
+    {
+      label: 'Quit',
+      role: 'quit',
+    },
+  ];
 
-  tray.on('right-click', (event, bounds) => {
+  const menu = Menu.buildFromTemplate(template);
+
+  tray.on('right-click', () => {
     tray.popUpContextMenu(menu);
   });
 }
@@ -133,7 +130,6 @@ app.on('ready', async () => {
     }
   }
   await createWindow();
-  tray.setContextMenu(menu);
 });
 
 /**
