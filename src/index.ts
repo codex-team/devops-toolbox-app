@@ -5,7 +5,7 @@ import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer';
 /**
  * Tray element
  */
-let tray;
+let tray: Tray;
 /**
  * Node environment
  */
@@ -39,6 +39,8 @@ async function createWindow(): Promise<void> {
     resizable: false,
     show: false,
     transparent: true,
+    vibrancy: 'dark',
+    visualEffectState: 'active',
     webPreferences: {
       nodeIntegration: true,
       enableRemoteModule: true,
@@ -104,6 +106,10 @@ app.on('activate', async () => {
  * Some APIs can only be used after this event occurs.
  */
 app.on('ready', async () => {
+  if (app.dock) {
+    app.dock.hide();
+  }
+
   if (isDevelopment && !process.env.IS_TEST) {
     try {
       await installExtension(VUEJS_DEVTOOLS);
