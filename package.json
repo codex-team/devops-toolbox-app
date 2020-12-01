@@ -51,5 +51,8 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/codex-team/devops-toolbox-app.git"
+  },
+  "build": {
+    "appId": "com.codex.devops-toolbox"
   }
 }
