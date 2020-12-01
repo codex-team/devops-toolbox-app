@@ -69,7 +69,7 @@ async function createWindow(): Promise<void> {
       const yPosition = process.platform === 'darwin' ? y : y - height;
 
       win.setBounds({
-        x: x - width / 2,
+        x: Math.round(x - width / 2),
         y: yPosition,
         height,
         width,
