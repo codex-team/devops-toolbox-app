@@ -1,5 +1,10 @@
 import * as childProcess from 'child_process';
 
+/**
+ * Function for opening system native terminal with command for connection to the server
+ *
+ * @param command - command with server address
+ */
 const session = function (command: string): void {
   if (process.platform == 'win32') {
     childProcess.exec(`start cmd.exe /K ${command}`);
