@@ -109,7 +109,7 @@ export default defineComponent({
   color: #ffffff;
 
   &:hover {
-  cursor: pointer;
+    cursor: pointer;
    }
 }
 
