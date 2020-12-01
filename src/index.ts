@@ -6,6 +6,27 @@ import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer';
  * Tray element
  */
 let tray: Tray;
+
+/**
+ *
+ */
+function createAppMenu(): Menu {
+  /**
+   * Menu element creating
+   */
+  const template: (MenuItemConstructorOptions| MenuItem)[] = [
+    {
+      label: 'About',
+      role: 'about',
+    },
+    {
+      label: 'Quit',
+      role: 'quit',
+    },
+  ];
+
+  return Menu.buildFromTemplate(template);
+}
 /**
  * Node environment
  */
@@ -75,21 +96,7 @@ async function createWindow(): Promise<void> {
       win.show();
     }
   });
-  /**
-   * Menu element creating
-   */
-  const template: (MenuItemConstructorOptions| MenuItem)[] = [
-    {
-      label: 'About',
-      role: 'about',
-    },
-    {
-      label: 'Quit',
-      role: 'quit',
-    },
-  ];
-
-  const menu = Menu.buildFromTemplate(template);
+  const menu = createAppMenu();
 
   tray.on('right-click', () => {
     tray.popUpContextMenu(menu);
