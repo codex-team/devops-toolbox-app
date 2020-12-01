@@ -53,6 +53,6 @@
     "url": "git+https://github.com/codex-team/devops-toolbox-app.git"
   },
   "build": {
-    "appId": "com.codex.devops-toolbox"
+    "appId": "so.codex.devops-toolbox"
   }
 }
