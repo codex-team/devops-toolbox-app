@@ -101,6 +101,7 @@ body {
   width: 100%;
   height: 100vh;
   object-fit: contain;
+  background: rgba(31, 59, 88, 0.78)
 }
 
 #app::-webkit-scrollbar {
