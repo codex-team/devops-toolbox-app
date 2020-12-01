@@ -110,7 +110,7 @@ export default defineComponent({
 
   &:hover {
     cursor: pointer;
-   }
+  }
 }
 
 </style>
