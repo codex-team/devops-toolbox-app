@@ -1,6 +1,7 @@
 import { app, protocol, BrowserWindow, Tray } from 'electron';
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib';
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer';
+import notify from './../actions/notification';
 
 /**
  * Tray element
@@ -118,6 +119,12 @@ app.on('ready', async () => {
     }
   }
   await createWindow();
+
+  if (process.platform === 'win32') {
+    app.setAppUserModelId('com.codex.devops-toolbox');
+  }
+
+  notify('DevOps Toolbox is running...');
 });
 
 /**
