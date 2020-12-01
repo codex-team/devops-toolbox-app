@@ -121,7 +121,7 @@ app.on('ready', async () => {
   await createWindow();
 
   if (process.platform === 'win32') {
-    app.setAppUserModelId('com.codex.devops-toolbox');
+    app.setAppUserModelId('so.codex.devops-toolbox');
   }
 
   notify('DevOps Toolbox is running...');
