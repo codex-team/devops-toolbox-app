@@ -65,6 +65,9 @@ export default defineComponent({
       return (remote.process.platform === 'darwin' ? '⌘' : 'Ctrl+') + this.hotkey;
     },
   },
+  /**
+   * Methods for processing activities
+   */
   methods: {
     openTerminal(): void {
       const command = 'ssh root@stage.hawk.so';
