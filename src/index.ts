@@ -5,7 +5,7 @@ import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer';
 /**
  * Tray element
  */
-let tray;
+let tray: Tray;
 /**
  * Node environment
  */
@@ -39,6 +39,8 @@ async function createWindow(): Promise<void> {
     resizable: false,
     show: false,
     transparent: true,
+    vibrancy: 'dark',
+    visualEffectState: 'active',
     webPreferences: {
       nodeIntegration: true,
       enableRemoteModule: true,
@@ -67,7 +69,7 @@ async function createWindow(): Promise<void> {
       const yPosition = process.platform === 'darwin' ? y : y - height;
 
       win.setBounds({
-        x: x - width / 2,
+        x: Math.round(x - width / 2),
         y: yPosition,
         height,
         width,
@@ -104,6 +106,10 @@ app.on('activate', async () => {
  * Some APIs can only be used after this event occurs.
  */
 app.on('ready', async () => {
+  if (app.dock) {
+    app.dock.hide();
+  }
+
   if (isDevelopment && !process.env.IS_TEST) {
     try {
       await installExtension(VUEJS_DEVTOOLS);

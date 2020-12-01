@@ -101,9 +101,7 @@ body {
   width: 100%;
   height: 100vh;
   object-fit: contain;
-  box-shadow: inset 0 0 4px 0 rgba(116, 174, 255, 0.25);
-  border: solid 1px rgba(0, 0, 0, 0.1);
-  background-color: rgba(116, 174, 255, 0.45);
+  background: rgba(31, 59, 88, 0.78)
 }
 
 #app::-webkit-scrollbar {
