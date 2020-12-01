@@ -8,13 +8,15 @@ import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer';
 let tray: Tray;
 
 /**
+ *  Creating menu
  *
+ *  @returns { Menu }
  */
 function createAppMenu(): Menu {
   /**
    * Menu element creating
    */
-  const template: (MenuItemConstructorOptions| MenuItem)[] = [
+  const template: (MenuItemConstructorOptions | MenuItem)[] = [
     {
       label: 'About',
       role: 'about',
