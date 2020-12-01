@@ -1,7 +1,7 @@
 import { Notification } from 'electron';
 
 /**
- * Function for showing notification for
+ * Function for showing notification
  *
  * @param message - Message which will be displayed in the notification
  */
