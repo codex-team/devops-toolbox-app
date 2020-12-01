@@ -32,14 +32,13 @@ protocol.registerSchemesAsPrivileged([
  * Creating window
  */
 async function createWindow(): Promise<void> {
-  const win: BrowserWindow = new BrowserWindow({
+  const win = new BrowserWindow({
     height: 352,
     width: 260,
     frame: false,
     resizable: false,
     show: false,
     transparent: true,
-    type: 'textured',
     vibrancy: 'dark',
     visualEffectState: 'active',
     webPreferences: {
