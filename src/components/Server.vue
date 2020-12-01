@@ -69,6 +69,9 @@ export default defineComponent({
    * Methods for processing activities
    */
   methods: {
+    /**
+     * Function for open terminal with custom command
+     */
     openTerminal(): void {
       const command = 'ssh root@stage.hawk.so';
 
