@@ -9,6 +9,7 @@ function showNotification(message: string): void {
   const notification = {
     title: 'CodeX DevOps Toolbox',
     body: `${message}`,
+    icon: `src/assets/images/front.png`,
   };
 
   new Notification(notification).show();
