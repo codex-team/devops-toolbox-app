@@ -8,7 +8,7 @@ import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer';
 let tray: Tray;
 
 /**
- *  Creating menu
+ *  Creates the system menu that will be displayed by right-arrow click on the app icon.
  *
  *  @returns { Menu }
  */
