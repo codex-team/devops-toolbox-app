@@ -1,4 +1,4 @@
-import { app, protocol, BrowserWindow, Tray } from 'electron';
+import { app, protocol, BrowserWindow, Tray, Menu, MenuItemConstructorOptions, MenuItem } from 'electron';
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib';
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer';
 
@@ -6,6 +6,29 @@ import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer';
  * Tray element
  */
 let tray: Tray;
+
+/**
+ *  Creates the system menu that will be displayed by right-arrow click on the app icon.
+ *
+ *  @returns { Menu }
+ */
+function createAppMenu(): Menu {
+  /**
+   * Menu element creating
+   */
+  const template: (MenuItemConstructorOptions | MenuItem)[] = [
+    {
+      label: 'About',
+      role: 'about',
+    },
+    {
+      label: 'Quit',
+      role: 'quit',
+    },
+  ];
+
+  return Menu.buildFromTemplate(template);
+}
 /**
  * Node environment
  */
@@ -58,9 +81,7 @@ async function createWindow(): Promise<void> {
 
   tray = new Tray(iconPath);
   tray.on('click', (event, bounds) => {
-    // click event bounds
     const { x, y } = bounds;
-    // window height and width
     const { height, width } = win.getBounds();
 
     if (win.isVisible()) {
@@ -76,6 +97,11 @@ async function createWindow(): Promise<void> {
       });
       win.show();
     }
+  });
+  const menu = createAppMenu();
+
+  tray.on('right-click', () => {
+    tray.popUpContextMenu(menu);
   });
 }
 
