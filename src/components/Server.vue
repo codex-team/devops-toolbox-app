@@ -2,7 +2,10 @@
   <div class="server">
     <header class="server__header">
       {{ name }}
-      <div class="bash">
+      <div
+        class="bash"
+        @click="openTerminal"
+      >
         >.
       </div>
       <div class="server__hotkey">
@@ -22,6 +25,7 @@
 import { defineComponent } from 'vue';
 import { remote } from 'electron';
 import Project from './Project.vue';
+import openSession from './../../actions/session';
 
 export default defineComponent({
   name: 'Server',
@@ -61,6 +65,19 @@ export default defineComponent({
       return (remote.process.platform === 'darwin' ? '⌘' : 'Ctrl+') + this.hotkey;
     },
   },
+  /**
+   * Methods for processing activities
+   */
+  methods: {
+    /**
+     * Function for open terminal with custom command
+     */
+    openTerminal(): void {
+      const command = 'ssh root@stage.hawk.so';
+
+      openSession(command);
+    },
+  },
 });
 </script>
 
@@ -96,6 +113,10 @@ export default defineComponent({
   font-weight: 900;
   letter-spacing: -0.3px;
   color: #ffffff;
+
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 </style>
