@@ -2,6 +2,8 @@ import { app, protocol, BrowserWindow, Tray, Menu, MenuItemConstructorOptions, M
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib';
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer';
 
+import { logger } from './utils/logger';
+
 /**
  * Tray element
  */
@@ -143,7 +145,15 @@ app.on('ready', async () => {
       console.error('Vue Devtools failed to install:', e.toString());
     }
   }
-  await createWindow();
+  try {
+    logger.info('Starting...');
+    await createWindow();
+    logger.info('App is ready');
+  } catch (error) {
+    logger.error(error);
+
+    app.quit();
+  }
 });
 
 /**
@@ -162,3 +172,8 @@ if (isDevelopment) {
     });
   }
 }
+
+process.on("uncaughtException", (err) => {
+  logger.error(err);
+  throw err;
+});
