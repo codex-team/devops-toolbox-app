@@ -2,7 +2,7 @@
   <div class="server">
     <header class="server__header">
       {{ name }}
-      <terminalSvg
+      <TerminalSvg
         class="bash"
         @click="openTerminal"
       />
@@ -23,14 +23,14 @@
 import { defineComponent } from 'vue';
 import { remote } from 'electron';
 import Project from './Project.vue';
-import terminalSvg from '../assets/terminal.svg';
+import TerminalSvg from '../assets/terminal.svg';
 import openSession from './../../actions/session';
 
 export default defineComponent({
   name: 'Server',
   components: {
     Project,
-    terminalSvg,
+    TerminalSvg,
   },
   props: {
     /**
