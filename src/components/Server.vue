@@ -2,7 +2,7 @@
   <div class="server">
     <header class="server__header">
       <div
-        class="server__header-clickable"
+        class="server__header--clickable"
         @click="openTerminal"
       >
         <span class="server__title">{{ name }}</span>
@@ -100,7 +100,7 @@ export default defineComponent({
     color: var(--color-text-header);
     margin-bottom: 10px;
 
-    &-clickable {
+    &--clickable {
       display: flex;
       align-items: center;
       cursor: pointer;
