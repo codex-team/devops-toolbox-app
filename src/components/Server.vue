@@ -1,7 +1,7 @@
 <template>
   <div class="server">
     <header class="server__header">
-      {{ name }}
+      <span class="server__title">{{ name }}</span>
       <svg
         class="bash"
         width="16"
@@ -87,6 +87,10 @@ export default defineComponent({
 
 .server {
   margin-bottom: 14px;
+
+  &__title:hover {
+     text-shadow: 0 0 2px var(--color-text-shadow-header);
+   }
 
   &__header {
     display: flex;
