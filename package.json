@@ -6,10 +6,11 @@
   "scripts": {
     "build": "tsc",
     "lint": "eslint ./src",
+    "lint:fix": "eslint ./src --fix",
+    "lint:test": "eslint ./src --max-warnings 0",
     "build-vue": "vue-cli-service build",
     "electron:build": "vue-cli-service electron:build",
     "dev": "vue-cli-service electron:serve",
-    "lint:fix": "eslint ./src --fix",
     "postinstall": "electron-builder install-app-deps",
     "postuninstall": "electron-builder install-app-deps"
   },
