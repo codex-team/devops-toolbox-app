@@ -24,7 +24,7 @@ import { defineComponent } from 'vue';
 import { remote } from 'electron';
 import Project from './Project.vue';
 import TerminalSvg from '../assets/terminal.svg';
-import openSession from './../../actions/session';
+import openSession from '../utils/session';
 
 export default defineComponent({
   name: 'Server',
