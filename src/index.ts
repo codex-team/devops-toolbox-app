@@ -1,7 +1,7 @@
 import { app, protocol, BrowserWindow, Tray, Menu, MenuItemConstructorOptions, MenuItem } from 'electron';
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib';
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer';
-import notify from './../actions/notification';
+import notify from './utils/notification';
 
 /**
  * Tray element
