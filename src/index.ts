@@ -81,6 +81,7 @@ async function createWindow(): Promise<void> {
   const iconPath = `src/assets/images/${iconName}`;
 
   tray = new Tray(iconPath);
+  tray.setIgnoreDoubleClickEvents(true);
   tray.on('click', (event, bounds) => {
     const { x, y } = bounds;
     const { height, width } = win.getBounds();

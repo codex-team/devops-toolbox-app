@@ -2,12 +2,10 @@
   <div class="server">
     <header class="server__header">
       {{ name }}
-      <div
+      <TerminalSvg
         class="bash"
         @click="openTerminal"
-      >
-        >.
-      </div>
+      />
       <div class="server__hotkey">
         {{ platformHotkey }}
       </div>
@@ -25,12 +23,14 @@
 import { defineComponent } from 'vue';
 import { remote } from 'electron';
 import Project from './Project.vue';
-import openSession from './../../actions/session';
+import TerminalSvg from '../assets/terminal.svg';
+import openSession from '../utils/session';
 
 export default defineComponent({
   name: 'Server',
   components: {
     Project,
+    TerminalSvg,
   },
   props: {
     /**
@@ -103,16 +103,7 @@ export default defineComponent({
 }
 
 .bash {
-  width: 16px;
-  height: 16px;
-  padding: 2px 6px 4px 2px;
   margin-left: 8px;
-  background-color: black;
-  border-radius: 5px;
-  font-size: 10px;
-  font-weight: 900;
-  letter-spacing: -0.3px;
-  color: #ffffff;
 
   &:hover {
     cursor: pointer;
