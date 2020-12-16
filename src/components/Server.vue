@@ -1,13 +1,11 @@
 <template>
   <div class="server">
-    <header class="server__header">
-      <div
-        class="server__header--clickable"
-        @click="openTerminal"
-      >
-        <span class="server__title">{{ name }}</span>
-        <TerminalSvg class="bash" />
-      </div>
+    <header
+      class="server__header"
+      @click="openTerminal"
+    >
+      <span class="server__title">{{ name }}</span>
+      <TerminalSvg class="bash" />
       <div class="server__hotkey">
         {{ platformHotkey }}
       </div>
@@ -89,7 +87,7 @@ export default defineComponent({
   margin-bottom: 14px;
 
   &__title:hover {
-     text-shadow: 0 0 2px var(--color-text-shadow-header);
+     text-shadow: 0 0 2px var(--color-box-shadow-white);
    }
 
   &__header {
@@ -99,12 +97,7 @@ export default defineComponent({
     font-weight: bold;
     color: var(--color-text-header);
     margin-bottom: 10px;
-
-    &--clickable {
-      display: flex;
-      align-items: center;
-      cursor: pointer;
-    }
+    cursor: pointer;
   }
 
   &__hotkey {
