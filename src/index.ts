@@ -1,6 +1,7 @@
 import { app, protocol, BrowserWindow, Tray, Menu, MenuItemConstructorOptions, MenuItem } from 'electron';
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib';
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer';
+import notify from './utils/notification';
 
 /**
  * Tray element
@@ -145,6 +146,16 @@ app.on('ready', async () => {
     }
   }
   await createWindow();
+
+  /**
+   * Sets AppUserModelID for application on windows for development use.
+   * It shows e.g. in notifications.
+   */
+  if (process.platform === 'win32') {
+    app.setAppUserModelId('so.codex.devops-toolbox');
+  }
+
+  notify('DevOps Toolbox is running...');
 });
 
 /**
