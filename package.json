@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "",
   "author": "CodeX",
+  "main": "background.js",
   "scripts": {
     "build": "tsc",
     "lint": "eslint ./src",
@@ -12,7 +13,8 @@
     "electron:build": "vue-cli-service electron:build",
     "dev": "vue-cli-service electron:serve",
     "postinstall": "electron-builder install-app-deps",
-    "postuninstall": "electron-builder install-app-deps"
+    "postuninstall": "electron-builder install-app-deps",
+    "electron:generate-icons": "electron-icon-builder --input=./public/icon.png --output=build --flatten"
   },
   "dependencies": {
     "@types/node": "^14.14.9",
@@ -39,6 +41,7 @@
     "@vue/compiler-sfc": "^3.0.4",
     "@vue/eslint-config-typescript": "^5.0.2",
     "electron-devtools-installer": "^3.1.0",
+    "electron-icon-builder": "^1.0.2",
     "eslint": "^7.13.0",
     "eslint-config-codex": "github:codex-team/eslint-config",
     "eslint-plugin-vue": "^7.0.0-0",
@@ -53,8 +56,5 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/codex-team/devops-toolbox-app.git"
-  },
-  "build": {
-    "appId": "so.codex.devops-toolbox"
   }
 }
