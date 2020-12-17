@@ -3,6 +3,8 @@ import { createProtocol } from 'vue-cli-plugin-electron-builder/lib';
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer';
 import notify from './utils/notification';
 
+import { logger } from './utils/logger';
+
 /**
  * Tray element
  */
@@ -81,7 +83,6 @@ async function createWindow(): Promise<void> {
   const iconPath = `src/assets/images/${iconName}`;
 
   tray = new Tray(iconPath);
-  tray.setIgnoreDoubleClickEvents(true);
   tray.on('click', (event, bounds) => {
     const { x, y } = bounds;
     const { height, width } = win.getBounds();
@@ -145,17 +146,26 @@ app.on('ready', async () => {
       console.error('Vue Devtools failed to install:', e.toString());
     }
   }
-  await createWindow();
+  try {
+    logger.info('Starting...');
+    await createWindow();
 
-  /**
-   * Sets AppUserModelID for application on windows for development use.
-   * It shows e.g. in notifications.
-   */
-  if (process.platform === 'win32') {
-    app.setAppUserModelId('so.codex.devops-toolbox');
+    /**
+     * Sets AppUserModelID for application on windows for development use.
+     * It shows e.g. in notifications.
+     */
+    if (process.platform === 'win32') {
+      app.setAppUserModelId('so.codex.devops-toolbox');
+    }
+
+    notify('DevOps Toolbox is running...');
+
+    logger.info('App is ready');
+  } catch (error) {
+    logger.error(error);
+
+    app.quit();
   }
-
-  notify('DevOps Toolbox is running...');
 });
 
 /**
@@ -174,3 +184,8 @@ if (isDevelopment) {
     });
   }
 }
+
+process.on("uncaughtException", (err) => {
+  logger.error(err);
+  throw err;
+});
