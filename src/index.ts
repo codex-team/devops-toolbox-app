@@ -1,8 +1,9 @@
 import { app, protocol, BrowserWindow } from 'electron';
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer';
 import notify from './utils/notification';
-import createWindow from '@/utils/AppWindow';
+import createTray from '@/electronComponents/tray';
 
+let tray;
 /**
  * Node environment
  */
@@ -38,7 +39,7 @@ app.on('window-all-closed', () => {
  */
 app.on('activate', async () => {
   if (BrowserWindow.getAllWindows().length === 0) {
-    await createWindow();
+    tray = await createTray();
   }
 });
 
@@ -59,7 +60,7 @@ app.on('ready', async () => {
       console.error('Vue Devtools failed to install:', e.toString());
     }
   }
-  await createWindow();
+  tray = await createTray();
 
   /**
    * Sets AppUserModelID for application on windows for development use.

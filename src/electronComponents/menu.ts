@@ -5,7 +5,7 @@ import { Menu, MenuItem, MenuItemConstructorOptions } from 'electron';
  *
  *  @returns { Menu }
  */
-function createAppMenu(): Menu {
+export default function createAppMenu(): Menu {
   /**
    * Menu element creating
    */
@@ -22,5 +22,3 @@ function createAppMenu(): Menu {
 
   return Menu.buildFromTemplate(template);
 }
-
-export default createAppMenu;
