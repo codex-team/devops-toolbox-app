@@ -1,4 +1,5 @@
 import { Notification } from 'electron';
+import path from 'path';
 
 /**
  * Function for showing notification
@@ -9,7 +10,7 @@ function showNotification(message: string): void {
   const notification = {
     title: 'CodeX DevOps Toolbox',
     body: `${message}`,
-    icon: `src/assets/images/front.png`,
+    icon: path.join(__static, 'icon24x24.png'),
   };
 
   new Notification(notification).show();

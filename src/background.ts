@@ -2,8 +2,8 @@ import { app, protocol, BrowserWindow, Tray, Menu, MenuItemConstructorOptions, M
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib';
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer';
 import notify from './utils/notification';
-
 import { logger } from './utils/logger';
+import path from 'path';
 
 /**
  * Tray element
@@ -79,8 +79,8 @@ async function createWindow(): Promise<void> {
     createProtocol(protocolName);
     await win.loadURL(`${protocolName}://./index.html`);
   }
-  const iconName = process.platform === 'win32' ? 'front.png' : 'front-mac.png';
-  const iconPath = `src/assets/images/${iconName}`;
+  // const iconName = process.platform === 'win32' ? 'icon.ico' : 'icon.icns';
+  const iconPath = path.join(__static, 'icon24x24.png');
 
   tray = new Tray(iconPath);
   tray.on('click', (event, bounds) => {
