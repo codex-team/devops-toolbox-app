@@ -1,7 +1,7 @@
 module.exports = {
   pluginOptions: {
     electronBuilder: {
-      mainProcessFile: 'src/index.ts',
+      mainProcessFile: 'src/background.ts',
       nodeIntegration: true,
     },
   },
