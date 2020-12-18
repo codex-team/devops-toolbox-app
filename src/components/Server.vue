@@ -87,7 +87,7 @@ export default defineComponent({
   margin-bottom: 14px;
 
   &__title:hover {
-    text-shadow: 0 0 2px color-mod(var(--color-text-main) alpha(30%))
+    text-shadow: 0 0 2px color-mod(var(--color-text-main) alpha(30%));
   }
 
   &__header {
