@@ -43,7 +43,7 @@ export default defineComponent({
   align-items: center;
   font-size: 14px;
   font-weight: bold;
-  color: var(--color-text-header);
+  color: var(--color-text-main);
 
   &__image {
     width: 24px;
