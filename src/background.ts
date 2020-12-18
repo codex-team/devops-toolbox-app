@@ -2,6 +2,8 @@ import { app, protocol, BrowserWindow, Tray, Menu, MenuItemConstructorOptions, M
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib';
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer';
 import notify from './utils/notification';
+import { logger } from './utils/logger';
+import path from 'path';
 
 /**
  * Tray element
@@ -77,11 +79,10 @@ async function createWindow(): Promise<void> {
     createProtocol(protocolName);
     await win.loadURL(`${protocolName}://./index.html`);
   }
-  const iconName = process.platform === 'win32' ? 'front.png' : 'front-mac.png';
-  const iconPath = `src/assets/images/${iconName}`;
 
-  tray = new Tray(iconPath);
-  tray.setIgnoreDoubleClickEvents(true);
+  const trayIconPath = path.join(__static, 'tray-icon.png');
+
+  tray = new Tray(trayIconPath);
   tray.on('click', (event, bounds) => {
     const { x, y } = bounds;
     const { height, width } = win.getBounds();
@@ -100,6 +101,7 @@ async function createWindow(): Promise<void> {
       win.show();
     }
   });
+
   const menu = createAppMenu();
 
   tray.on('right-click', () => {
@@ -145,17 +147,26 @@ app.on('ready', async () => {
       console.error('Vue Devtools failed to install:', e.toString());
     }
   }
-  await createWindow();
+  try {
+    logger.info('Starting...');
+    await createWindow();
 
-  /**
-   * Sets AppUserModelID for application on windows for development use.
-   * It shows e.g. in notifications.
-   */
-  if (process.platform === 'win32') {
-    app.setAppUserModelId('so.codex.devops-toolbox');
+    /**
+     * Sets AppUserModelID for application on windows for development use.
+     * It shows e.g. in notifications.
+     */
+    if (process.platform === 'win32') {
+      app.setAppUserModelId('so.codex.devops-toolbox');
+    }
+
+    notify('DevOps Toolbox is running...');
+
+    logger.info('App is ready');
+  } catch (error) {
+    logger.error(error);
+
+    app.quit();
   }
-
-  notify('DevOps Toolbox is running...');
 });
 
 /**
@@ -174,3 +185,11 @@ if (isDevelopment) {
     });
   }
 }
+
+/**
+ * Catch uncaught exceptions
+ */
+process.on('uncaughtException', (err) => {
+  logger.error(err);
+  throw err;
+});

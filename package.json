@@ -3,14 +3,16 @@
   "version": "0.0.1",
   "description": "",
   "author": "CodeX",
+  "main": "background.js",
   "scripts": {
-    "build": "tsc",
     "lint": "eslint ./src",
     "lint:fix": "eslint ./src --fix",
     "lint:test": "eslint ./src --max-warnings 0",
     "build-vue": "vue-cli-service build",
-    "electron:build": "vue-cli-service electron:build",
     "dev": "vue-cli-service electron:serve",
+    "build:app": "yarn electron:generate-icons && yarn electron:build",
+    "electron:build": "vue-cli-service electron:build",
+    "electron:generate-icons": "electron-icon-builder --input=./public/app-icon.png --output=build --flatten",
     "postinstall": "electron-builder install-app-deps",
     "postuninstall": "electron-builder install-app-deps"
   },
@@ -27,11 +29,13 @@
     "postcss-simple-vars": "^5.0.2",
     "typescript": "^4.0.5",
     "vue": "^3.0.4",
-    "vue-svg-loader": "^0.17.0-beta.2"
+    "vue-svg-loader": "^0.17.0-beta.2",
+    "winston": "^3.3.3",
+    "winston-daily-rotate-file": "^4.5.0"
   },
   "devDependencies": {
     "@types/electron-devtools-installer": "^2.2.0",
-    "@typescript-eslint/eslint-plugin": "^2.33.0",
+    "@typescript-eslint/eslint-plugin": "^4.10.0",
     "@typescript-eslint/parser": "^2.33.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-plugin-typescript": "^4.5.8",
@@ -39,6 +43,7 @@
     "@vue/compiler-sfc": "^3.0.4",
     "@vue/eslint-config-typescript": "^5.0.2",
     "electron-devtools-installer": "^3.1.0",
+    "electron-icon-builder": "^1.0.2",
     "eslint": "^7.13.0",
     "eslint-config-codex": "github:codex-team/eslint-config",
     "eslint-plugin-vue": "^7.0.0-0",
@@ -53,8 +58,5 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/codex-team/devops-toolbox-app.git"
-  },
-  "build": {
-    "appId": "so.codex.devops-toolbox"
   }
 }
