@@ -186,7 +186,10 @@ if (isDevelopment) {
   }
 }
 
-process.on("uncaughtException", (err) => {
+/**
+ * Catch uncaught exceptions
+ */
+process.on('uncaughtException', (err) => {
   logger.error(err);
   throw err;
 });
