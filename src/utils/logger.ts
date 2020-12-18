@@ -1,3 +1,27 @@
+import fs from 'fs';
+import path from 'path';
+import { app } from 'electron';
+import winston from 'winston';
+import DailyRotateFile from 'winston-daily-rotate-file';
+
+/**
+ * Get application data folder path
+ */
+const appFolder = app.getPath('userData');
+
+/**
+ * Logs will be stored in the app-data/logs
+ * @type {string}
+ */
+const logsDirPath = path.join(appFolder, 'logs');
+
+/**
+ * Create logs dir if not exist
+ */
+if (!fs.existsSync(logsDirPath)) {
+  fs.mkdirSync(logsDirPath);
+}
+
 /**
  * Logger can save log to file in appData/logs dir
  *
@@ -7,40 +31,10 @@
  * @example logger.warn('my log');
  * @example logger.error('my log');
  */
-import fs from 'fs';
-import path from 'path';
-import { app } from 'electron';
-
-import winston from 'winston';
-import DailyRotateFile from 'winston-daily-rotate-file';
-
-const appFolder = app.getPath('userData');
-
-/**
- * Logs will be stored in the app-data/logs
- *
- * @type {string}
- */
-const logsDirPath = path.join(appFolder, 'logs');
-
-if (!fs.existsSync(logsDirPath)) {
-  fs.mkdirSync(logsDirPath);
-}
-
-// const errorStackFormat = winston.format(info => {
-//   if (info instanceof Error) {
-//     return Object.assign({}, info, {
-//       stack: info.stack,
-//       message: info.message
-//     })
-//   }
-//   return info;
-// })
-
 export const logger = winston.createLogger({
   level: process.env.LOG_LEVEL || 'debug',
   format: winston.format.combine(
-    winston.format.errors({ stack: true }), // <-- use errors format
+    winston.format.errors({ stack: true }),
     winston.format.timestamp({
       format: 'HH:mm:ss',
     }),
@@ -54,11 +48,3 @@ export const logger = winston.createLogger({
     }),
   ],
 });
-//
-// export default const logg = {
-//   log: logger.debug.bind(logger),
-//   debug: logger.debug.bind(logger),
-//   info: logger.info.bind(logger),
-//   warn: logger.warn.bind(logger),
-//   error: logger.error.bind(logger),
-// };

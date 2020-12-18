@@ -80,9 +80,9 @@ async function createWindow(): Promise<void> {
     await win.loadURL(`${protocolName}://./index.html`);
   }
   // const iconName = process.platform === 'win32' ? 'icon.ico' : 'icon.icns';
-  const iconPath = path.join(__static, 'icon24x24.png');
+  const trayIconPath = path.join(__static, 'tray-icon.png');
 
-  tray = new Tray(iconPath);
+  tray = new Tray(trayIconPath);
   tray.on('click', (event, bounds) => {
     const { x, y } = bounds;
     const { height, width } = win.getBounds();
@@ -101,6 +101,7 @@ async function createWindow(): Promise<void> {
       win.show();
     }
   });
+
   const menu = createAppMenu();
 
   tray.on('right-click', () => {
