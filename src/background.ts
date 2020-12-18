@@ -79,7 +79,7 @@ async function createWindow(): Promise<void> {
     createProtocol(protocolName);
     await win.loadURL(`${protocolName}://./index.html`);
   }
-  // const iconName = process.platform === 'win32' ? 'icon.ico' : 'icon.icns';
+
   const trayIconPath = path.join(__static, 'tray-icon.png');
 
   tray = new Tray(trayIconPath);
