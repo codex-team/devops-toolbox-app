@@ -88,7 +88,7 @@ export default defineComponent({
 
   &__title:hover {
      text-shadow: 0 0 2px color-mod(var(--color-text-main) alpha(30%))
-   }
+  }
 
   &__header {
     display: flex;
