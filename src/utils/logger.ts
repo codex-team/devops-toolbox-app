@@ -11,6 +11,7 @@ const appFolder = app.getPath('userData');
 
 /**
  * Logs will be stored in the app-data/logs
+ *
  * @type {string}
  */
 const logsDirPath = path.join(appFolder, 'logs');
