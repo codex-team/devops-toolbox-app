@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { BrowserWindow, Tray } from 'electron';
 import createAppMenu from '@/appElements/menu';
 import calculateBounds from '@/utils/calculateBounds';

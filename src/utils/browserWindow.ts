@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { BrowserWindow, BrowserWindowConstructorOptions } from 'electron';
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib';
 
@@ -9,7 +10,7 @@ const protocolName = 'app';
 /**
  * Creating BrowserWindow
  *
- * @param options
+ * @param options - Options for constructor of BrowserWindow
  */
 export default async function createWindow(options: BrowserWindowConstructorOptions): Promise<BrowserWindow> {
   const window: BrowserWindow = new BrowserWindow(options);

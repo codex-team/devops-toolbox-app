@@ -4,7 +4,7 @@ import notify from './utils/notification';
 import createTray from '@/appElements/tray';
 import createWindow from '@/utils/browserWindow';
 import { logger } from './utils/logger';
-import path from "path";
+import path from 'path';
 
 let window;
 
