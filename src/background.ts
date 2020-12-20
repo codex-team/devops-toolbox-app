@@ -3,6 +3,8 @@ import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer';
 import notify from './utils/notification';
 import createTray from '@/appElements/tray';
 import createWindow from '@/utils/browserWindow';
+import { logger } from './utils/logger';
+import path from 'path';
 
 let window;
 
@@ -78,32 +80,41 @@ app.on('ready', async () => {
       console.error('Vue Devtools failed to install:', e.toString());
     }
   }
-  window = await createWindow({
-    height: 352,
-    width: 260,
-    frame: false,
-    resizable: false,
-    show: false,
-    transparent: true,
-    vibrancy: 'dark',
-    visualEffectState: 'active',
-    webPreferences: {
-      nodeIntegration: true,
-      enableRemoteModule: true,
-    },
-  });
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  tray = await createTray(window);
 
-  /**
-   * Sets AppUserModelID for application on windows for development use.
-   * It shows e.g. in notifications.
-   */
-  if (process.platform === 'win32') {
-    app.setAppUserModelId('so.codex.devops-toolbox');
+  try {
+    logger.info('Starting...');
+    window = await createWindow({
+      height: 352,
+      width: 260,
+      frame: false,
+      resizable: false,
+      show: false,
+      transparent: true,
+      vibrancy: 'dark',
+      visualEffectState: 'active',
+      webPreferences: {
+        nodeIntegration: true,
+        enableRemoteModule: true,
+      },
+    });
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    tray = await createTray(window);
+    /**
+     * Sets AppUserModelID for application on windows for development use.
+     * It shows e.g. in notifications.
+     */
+    if (process.platform === 'win32') {
+      app.setAppUserModelId('so.codex.devops-toolbox');
+    }
+
+    notify('DevOps Toolbox is running...');
+
+    logger.info('App is ready');
+  } catch (error) {
+    logger.error(error);
+
+    app.quit();
   }
-
-  notify('DevOps Toolbox is running...');
 });
 
 /**
@@ -122,3 +133,11 @@ if (isDevelopment) {
     });
   }
 }
+
+/**
+ * Catch uncaught exceptions
+ */
+process.on('uncaughtException', (err) => {
+  logger.error(err);
+  throw err;
+});

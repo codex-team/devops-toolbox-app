@@ -32,6 +32,16 @@ module.exports = {
        * List of features with levels: https://cssdb.org/
        */
       stage: 0,
+
+      /**
+       * Enable or disable specific polyfills
+       * https://github.com/csstools/postcss-preset-env#features
+       * List of available plugins
+       * https://github.com/csstools/postcss-preset-env/blob/master/src/lib/plugins-by-id.js
+       */
+      features: {
+        'color-mod-function': {},
+      },
     },
 
     /**
