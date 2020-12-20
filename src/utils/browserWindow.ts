@@ -22,4 +22,4 @@ export default async function createWindow(options: BrowserWindowConstructorOpti
   }
 
   return window;
-};
+}

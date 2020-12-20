@@ -1,6 +1,6 @@
 import { BrowserWindow, Tray } from 'electron';
 import createAppMenu from '@/appElements/menu';
-
+import calculateBounds from '@/utils/calculateBounds';
 /**
  * Tray element creating
  *
@@ -26,11 +26,8 @@ export default async function createTray(window: BrowserWindow): Promise<Tray> {
     if (window.isVisible()) {
       window.hide();
     } else {
-      const yPosition = process.platform === 'darwin' ? y : y - height;
-
       window.setBounds({
-        x: Math.round(x - width / 2),
-        y: yPosition,
+        ...calculateBounds(x, y, height, width),
         height,
         width,
       });
