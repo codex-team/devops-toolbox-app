@@ -1,19 +1,19 @@
 import { BrowserWindow, Tray } from 'electron';
-import createAppMenu from '@/electronComponents/menu';
-import createWindow from '@/electronComponents/browserWindow';
+import createAppMenu from '@/appElements/menu';
 
 /**
  * Tray element creating
+ *
+ * @param window - window, which will appear on tray click event
  */
-export default async function createTray(): Promise<Tray> {
+export default async function createTray(window: BrowserWindow): Promise<Tray> {
   const iconName = process.platform === 'win32' ? 'front.png' : 'front-mac.png';
   const iconPath = `src/assets/images/${iconName}`;
   /**
    * Menu element creating
    */
   const menu = createAppMenu();
-  const tray: Tray = new Tray(iconPath);
-  const window: BrowserWindow = await createWindow();
+  const tray = new Tray(iconPath);
 
   tray.on('right-click', () => {
     tray.popUpContextMenu(menu);

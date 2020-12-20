@@ -1,8 +1,12 @@
 import { app, protocol, BrowserWindow } from 'electron';
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer';
 import notify from './utils/notification';
-import createTray from '@/electronComponents/tray';
+import createTray from '@/appElements/tray';
+import createWindow from '@/utils/browserWindow';
 
+let window;
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars-experimental
 let tray;
 /**
  * Node environment
@@ -39,7 +43,21 @@ app.on('window-all-closed', () => {
  */
 app.on('activate', async () => {
   if (BrowserWindow.getAllWindows().length === 0) {
-    tray = await createTray();
+    window = await createWindow({
+      height: 352,
+      width: 260,
+      frame: false,
+      resizable: false,
+      show: false,
+      transparent: true,
+      vibrancy: 'dark',
+      visualEffectState: 'active',
+      webPreferences: {
+        nodeIntegration: true,
+        enableRemoteModule: true,
+      },
+    });
+    tray = await createTray(window);
   }
 });
 
@@ -60,7 +78,22 @@ app.on('ready', async () => {
       console.error('Vue Devtools failed to install:', e.toString());
     }
   }
-  tray = await createTray();
+  window = await createWindow({
+    height: 352,
+    width: 260,
+    frame: false,
+    resizable: false,
+    show: false,
+    transparent: true,
+    vibrancy: 'dark',
+    visualEffectState: 'active',
+    webPreferences: {
+      nodeIntegration: true,
+      enableRemoteModule: true,
+    },
+  });
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  tray = await createTray(window);
 
   /**
    * Sets AppUserModelID for application on windows for development use.
