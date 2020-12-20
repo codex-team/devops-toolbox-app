@@ -4,7 +4,7 @@ import notify from './utils/notification';
 import createTray from '@/appElements/tray';
 import createWindow from '@/utils/browserWindow';
 import { logger } from './utils/logger';
-import path from 'path';
+import path from "path";
 
 let window;
 
@@ -48,6 +48,7 @@ app.on('activate', async () => {
     window = await createWindow({
       height: 352,
       width: 260,
+      icon: path.join(__static, 'app-icon.png'),
       frame: false,
       resizable: false,
       show: false,
@@ -86,6 +87,7 @@ app.on('ready', async () => {
     window = await createWindow({
       height: 352,
       width: 260,
+      icon: path.join(__static, 'app-icon.png'),
       frame: false,
       resizable: false,
       show: false,
