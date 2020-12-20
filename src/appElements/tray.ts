@@ -7,8 +7,7 @@ import createAppMenu from '@/appElements/menu';
  * @param window - window, which will appear on tray click event
  */
 export default async function createTray(window: BrowserWindow): Promise<Tray> {
-  const iconName = process.platform === 'win32' ? 'front.png' : 'front-mac.png';
-  const iconPath = `src/assets/images/${iconName}`;
+  const iconPath = 'public/tray-icon.png';
   /**
    * Menu element creating
    */
