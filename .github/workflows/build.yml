@@ -37,7 +37,7 @@ jobs:
 #          release: ${{ startsWith(github.ref, 'refs/tags/v') }}
 
       - name: Save dmg file
-          uses: actions/upload-artifact@v2
-          with:
-            name: devops-toolbox-app-0.0.1.dmg
-            path: dist_electron/devops-toolbox-app-0.0.1.dmg
+        uses: actions/upload-artifact@v2
+        with:
+          name: devops-toolbox-app-0.0.1.dmg
+          path: dist_electron/devops-toolbox-app-0.0.1.dmg
