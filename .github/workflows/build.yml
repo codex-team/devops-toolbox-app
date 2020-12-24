@@ -8,8 +8,7 @@ jobs:
 
     strategy:
       matrix:
-#        os: [macos-latest, ubuntu-latest, windows-latest]
-        os: [macos-latest]
+        os: [macos-latest, ubuntu-latest, windows-latest]
 
     steps:
       - name: Check out Git repository
@@ -38,6 +37,7 @@ jobs:
 
       - name: Save dmg file
         uses: actions/upload-artifact@v2
+        # https://github.com/actions/upload-artifact
         with:
-          name: devops-toolbox-app-0.0.1.dmg
-          path: dist_electron/devops-toolbox-app-0.0.1.dmg
+          name: Dist for ${{ matrix.os }}
+          path: dist_electron/devops-toolbox-app*
