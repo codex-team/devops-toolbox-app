@@ -16,9 +16,9 @@ Run the app locally
 
 You can find log files in the application supports directory. One log file per day.
 
-MacOS: `~/Library/Application Support/DevOps Toolbox/logs`
-Win: `C:\Users\{username}\AppData\Roaming\DevOps Toolbox\logs`
-Linux: `...`
+- MacOS: `~/Library/Application Support/DevOps Toolbox/logs`
+- Win: `C:\Users\{username}\AppData\Roaming\DevOps Toolbox\logs`
+- Linux: `...`
 
 ## Build 
 
