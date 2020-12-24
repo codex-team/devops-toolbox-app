@@ -6,7 +6,6 @@ module.exports = {
       builderOptions: {
         appId: 'so.codex.devops-toolbox',
         dmg: {
-          title: 'DevOps Toolbox',
           icon: 'build/dmg/logo-disk.icns',
           background: 'build/dmg/background.png',
           iconSize: 128,
