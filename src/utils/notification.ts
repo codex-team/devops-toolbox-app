@@ -1,4 +1,4 @@
-import { Notification } from 'electron';
+import { app, Notification } from 'electron';
 import path from 'path';
 
 /**
@@ -8,7 +8,7 @@ import path from 'path';
  */
 function showNotification(message: string): void {
   const notification = {
-    title: `${process.env.npm_package_productName}`,
+    title: `${app.getName()}`,
     body: `${message}`,
     icon: path.join(__static, 'icons', 'app-icon.png'),
   };

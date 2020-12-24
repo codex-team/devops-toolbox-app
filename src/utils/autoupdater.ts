@@ -34,14 +34,24 @@ autoUpdater.on('download-progress', (progressInfo) => {
 autoUpdater.on('update-downloaded', (updateInfo) => {
   logger.debug('Update is ready', updateInfo);
 
-  /* Or force quit app and install update */
-  autoUpdater.quitAndInstall();
+  /**
+   * Uncomment the following string to force quit app and install update
+   */
+  // autoUpdater.quitAndInstall();
 });
 
-/* Check for updates manually */
-autoUpdater.checkForUpdates();
+/**
+ * Check for updates on script start
+ *
+ * Silently: autoUpdater.checkForUpdates();
+ * With notification: autoUpdater.checkForUpdatesAndNotify();
+ */
+autoUpdater.checkForUpdatesAndNotify();
 
-/* Check updates every minute */
+/**
+ * Check for updates with given time interval
+ */
 setInterval(() => {
-  autoUpdater.checkForUpdates();
+  // autoUpdater.checkForUpdates();
+  autoUpdater.checkForUpdatesAndNotify();
 }, CHECK_FOR_UPDATES_INTERVAL);

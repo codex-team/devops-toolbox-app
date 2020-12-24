@@ -160,9 +160,10 @@ app.on('ready', async () => {
       app.setAppUserModelId('so.codex.devops-toolbox');
     }
 
-    notify(`${process.env.npm_package_productName} ${process.env.npm_package_version} is running...`);
+    const message = `${app.getName()} ${app.getVersion()} is running`;
 
-    logger.info(`${process.env.npm_package_productName} ${process.env.npm_package_version} is ready`);
+    notify(message);
+    logger.info(message);
 
     /**
      * Enable autoupdates for production version
