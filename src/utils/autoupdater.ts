@@ -52,6 +52,5 @@ autoUpdater.checkForUpdatesAndNotify();
  * Check for updates with given time interval
  */
 setInterval(() => {
-  // autoUpdater.checkForUpdates();
   autoUpdater.checkForUpdatesAndNotify();
 }, CHECK_FOR_UPDATES_INTERVAL);

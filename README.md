@@ -12,9 +12,19 @@ Run the app locally
 
 `yarn dev`
 
-### Build
+## Logs
 
-To package the application for distribution you need to call only one command:
+You can find log files in the application supports directory. One log file per day.
+
+MacOS: `~/Library/Application\ Support/DevOps\ Toolbox/logs/`
+Win: `...`
+Linux: `...`
+
+## Build
+
+The app will be built automatically on every push. Artifacts with 
+
+To package the application for distribution locally you need to call only one command:
 
 `yarn build`
 
@@ -25,3 +35,16 @@ To package the application for distribution you need to call only one command:
     - `yarn electron:icons-gen`— generate icons collection 
       - `yarn electron:icons-gen:postrun` — get a few icons and remove the rest 
   - `yarn electron:build` — build a dist app 
+
+## Release
+
+To emit release action, push changes and with a new tag.
+
+1. Make your changes.
+2. When you need to bump version, use `yarn version (--patch|--minor|--major)`.
+
+Version will be bumped, and a new tag with this version will be created.
+
+`postversion` command automatically pushes changes and tags to GitHub.
+
+ 
