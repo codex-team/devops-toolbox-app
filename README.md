@@ -16,11 +16,12 @@ Run the app locally
 
 To package the application for distribution you need to call only one command:
 
-`yarn build:app`
+`yarn build`
 
 #### Steps scheme description
 
-- `yarn build:app` — build the app 
-  - `yarn electron:icons-gen`— generate icons collection 
-    - `yarn electron:icons-gen:postrun` — get a few icons and remove the rest 
+- `yarn build` — build the app 
+  - `yarn electron:prebuild` — prepare the app for building
+    - `yarn electron:icons-gen`— generate icons collection 
+      - `yarn electron:icons-gen:postrun` — get a few icons and remove the rest 
   - `yarn electron:build` — build a dist app 
