@@ -37,11 +37,24 @@ jobs:
 
       # Save artifacts
       # https://gist.github.com/azu/673426500458f63f019c8f5e013f282a#gistcomment-3087187
-      - name: Cleanup artifacts
-        if: matrix.os != 'windows-latest'
-        run: |
-          mkdir artifacts
-          cp "./dist_electron/(*.exe,*.deb,*.AppImage,*.dmg)" ./artifacts || true
+      - name: Show artifacts list
+          run: |
+            cd ./dist_electron
+            ls -la
+
+      - name: Cleanup artifacts macOS
+          if: matrix.os == 'macos-latest'
+          run: |
+            mkdir artifacts
+            cp ./dist_electron/*.dmg ./artifacts
+
+      - name: Cleanup artifacts Linux
+          if: matrix.os == 'ubuntu-latest'
+          run: |
+            mkdir artifacts
+            cp ./dist_electron/*.deb ./artifacts
+            cp ./dist_electron/*.AppImage ./artifacts
+
       - name: Cleanup artifacts Win
         if: matrix.os == 'windows-latest'
         run: |
