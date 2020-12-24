@@ -32,12 +32,31 @@ jobs:
           mac_certs: ${{ secrets.mac_certs }}
           mac_certs_password: ${{ secrets.mac_certs_password }}
 
-          release: false
+          release: true
 #          release: ${{ startsWith(github.ref, 'refs/tags/v') }}
 
-      - name: Save output files
-        uses: actions/upload-artifact@v2
-        # https://github.com/actions/upload-artifact
+      # Save artifacts
+      # https://gist.github.com/azu/673426500458f63f019c8f5e013f282a#gistcomment-3087187
+      - name: Cleanup artifacts
+        if: matrix.os != 'windows-latest'
+        run: |
+          mkdir artifacts
+          cp "dist/(*.exe,*.deb,*.AppImage,*.dmg)" artifacts || true
+      - name: Cleanup artifacts Win
+        if: matrix.os == 'windows-latest'
+        run: |
+          mkdir artifacts
+          cp dist/*.exe artifacts
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v1
         with:
-          name: Dist for ${{ matrix.os }}
-          path: dist_electron/devops-toolbox-app*
+          name: ${{matrix.os}}
+          path: artifacts
+
+#      - name: Save output files
+#        uses: actions/upload-artifact@v2
+#        # https://github.com/actions/upload-artifact
+#        with:
+#          name: Dist for ${{ matrix.os }}
+#          path: dist_electron/devops-toolbox-app*
