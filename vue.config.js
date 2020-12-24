@@ -3,6 +3,37 @@ module.exports = {
     electronBuilder: {
       mainProcessFile: 'src/background.ts',
       nodeIntegration: true,
+      builderOptions: {
+        appId: 'so.codex.devops-toolbox',
+        dmg: {
+          title: 'DevOps Toolbox',
+          icon: 'build/dmg/logo-disk.icns',
+          background: 'build/dmg/background.png',
+          iconSize: 128,
+          window: {
+            width: 600,
+            height: 360,
+          },
+          contents: [
+            {
+              x: 172,
+              y: 180,
+            },
+            {
+              x: 428,
+              y: 180,
+              type: 'link',
+              path: '/Applications',
+            },
+          ],
+        },
+        win: {
+          target: 'nsis',
+        },
+        linux: {
+          target: 'AppImage',
+        },
+      },
     },
   },
   chainWebpack: config => {
