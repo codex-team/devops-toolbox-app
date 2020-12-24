@@ -10,7 +10,7 @@
     "lint:test": "eslint ./src --max-warnings 0",
     "build-vue": "vue-cli-service build",
     "dev": "vue-cli-service electron:serve",
-    "build:app": "yarn electron:generate-icons && yarn electron:build",
+    "build:app": "yarn electron:icons-gen && yarn electron:build",
     "electron:build": "vue-cli-service electron:build",
     "electron:icons-gen": "electron-icon-builder --input=./public/icons/app-icon.png --output=build --flatten && yarn electron:icons-gen:postrun",
     "electron:icons-gen:postrun": "cp ./build/icons/icon.ico ./build && cp ./build/icons/icon.icns ./build && cp ./build/icons/1024x1024.png ./build/icon.png && rm -rf ./build/icons",
