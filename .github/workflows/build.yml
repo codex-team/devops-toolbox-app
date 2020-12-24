@@ -35,13 +35,6 @@ jobs:
           release: true
 #          release: ${{ startsWith(github.ref, 'refs/tags/v') }}
 
-      # Save artifacts
-      # https://gist.github.com/azu/673426500458f63f019c8f5e013f282a#gistcomment-3087187
-      - name: Show artifacts list
-        run: |
-          cd ./dist_electron
-          ls -la
-
       - name: Create dir for artifacts
         run: |
           mkdir artifacts
@@ -63,10 +56,3 @@ jobs:
         with:
           name: ${{matrix.os}}
           path: artifacts
-
-#      - name: Save output files
-#        uses: actions/upload-artifact@v2
-#        # https://github.com/actions/upload-artifact
-#        with:
-#          name: Dist for ${{ matrix.os }}
-#          path: dist_electron/devops-toolbox-app*
