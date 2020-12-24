@@ -35,7 +35,7 @@ jobs:
           release: false
 #          release: ${{ startsWith(github.ref, 'refs/tags/v') }}
 
-      - name: Save dmg file
+      - name: Save output files
         uses: actions/upload-artifact@v2
         # https://github.com/actions/upload-artifact
         with:
