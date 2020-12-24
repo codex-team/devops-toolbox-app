@@ -19,11 +19,6 @@ jobs:
         with:
           node-version: 15
 
-      - name: Run linter tests
-        run: |
-          yarn
-          yarn lint:test
-
       - name: Build and release
         uses: samuelmeuli/action-electron-builder@v1
         with:
