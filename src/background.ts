@@ -1,5 +1,4 @@
 import { app, protocol, BrowserWindow, Tray, Menu, MenuItemConstructorOptions, MenuItem } from 'electron';
-import { autoUpdater } from "electron-updater"
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib';
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer';
 import notify from './utils/notification';
@@ -165,8 +164,11 @@ app.on('ready', async () => {
 
     logger.info(`${process.env.npm_package_productName} ${process.env.npm_package_version} is ready`);
 
+    /**
+     * Enable autoupdates for production version
+     */
     if (!isDevelopment) {
-      autoUpdater.checkForUpdatesAndNotify();
+      require('./utils/autoupdater');
     }
   } catch (error) {
     logger.error(error);
