@@ -8,7 +8,7 @@ import path from 'path';
  */
 function showNotification(message: string): void {
   const notification = {
-    title: 'CodeX DevOps Toolbox',
+    title: `${process.env.npm_package_productName}`,
     body: `${message}`,
     icon: path.join(__static, 'icons', 'app-icon.png'),
   };
