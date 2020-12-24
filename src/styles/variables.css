@@ -1,0 +1,16 @@
+:root {
+  /* Colors for texts */
+  --color-text-warning: #f74f4f;
+  --color-text-second: #cadafb;
+  --color-text-main: #ffffff;
+
+  /* Colors for backgrounds*/
+  --color-bg-success: #08ff84;
+  --color-bg-warning: #f74f4f;
+  --color-project: #cadafb;
+  --color-bg-status: #ffffff;
+
+  /* Colors for box shadow property */
+  --color-box-shadow-warning: rgba(247, 79, 79, 0.2);
+  --color-box-shadow-white: rgba(255, 255, 255, 0.6);
+}
