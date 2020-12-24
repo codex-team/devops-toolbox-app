@@ -30,7 +30,7 @@ To package the application for distribution locally you need to call only one co
 
 - `yarn build` — build the app 
   - `yarn electron:prebuild` — prepare the app for building
-    - `yarn electron:icons-gen`— generate icons collection 
+    - `yarn electron:icons-gen` — generate icons collection 
       - `yarn electron:icons-gen:postrun` — get a few icons and remove the rest 
   - `yarn electron:build` — build a dist app 
 
