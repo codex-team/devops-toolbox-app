@@ -1,21 +1,17 @@
-import Server from './server';
-
 /**
- * Interface for workspace
+ * Service is the working software we are watching for
+ * for example, nginx or Docker
  */
-export default interface Workspace {
+export default interface Service {
   /**
-   * Workspace name
+   * What kind of service represented by a payload
+   * Examples: 'nginx', 'docker' etc
    */
-  name: string;
+  type: string;
 
   /**
-   * User personal token to identify the owner of the workspace
+   * Useful data about the service
+   * collected by Agent
    */
-  authToken: string;
-
-  /**
-   * Workspace servers
-   */
-  servers: Server[];
+  payload: Record<string, unknown>;
 }

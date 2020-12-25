@@ -9,11 +9,6 @@ export interface DevopsToolboxAuthData {
    * Owned workspaces ids
    */
   workspaceIds: string[];
-
-  /**
-   * Current user auth token
-   */
-  userToken?: string;
 }
 
 /**
