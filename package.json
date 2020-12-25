@@ -14,8 +14,7 @@
     "electron:build": "vue-cli-service electron:build",
     "electron:generate-icons": "electron-icon-builder --input=./public/app-icon.png --output=build --flatten",
     "postinstall": "electron-builder install-app-deps",
-    "postuninstall": "electron-builder install-app-deps",
-    "run:transport": "ts-node src/utils/protocol/transport.ts"
+    "postuninstall": "electron-builder install-app-deps"
   },
   "dependencies": {
     "@types/node": "^14.14.9",
