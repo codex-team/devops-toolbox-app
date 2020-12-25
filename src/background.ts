@@ -1,9 +1,10 @@
 import { app, protocol, BrowserWindow, Tray, Menu, MenuItemConstructorOptions, MenuItem } from 'electron';
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib';
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer';
+import path from 'path';
 import notify from './utils/notification';
 import { logger } from './utils/logger';
-import path from 'path';
+import { createClient } from './utils/protocol/transport';
 
 /**
  * Tray element
@@ -185,6 +186,8 @@ if (isDevelopment) {
     });
   }
 }
+
+createClient();
 
 /**
  * Catch uncaught exceptions
