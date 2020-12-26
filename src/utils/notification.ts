@@ -1,4 +1,4 @@
-import { Notification } from 'electron';
+import { app, Notification } from 'electron';
 import path from 'path';
 
 /**
@@ -8,9 +8,9 @@ import path from 'path';
  */
 function showNotification(message: string): void {
   const notification = {
-    title: 'CodeX DevOps Toolbox',
+    title: `${app.getName()}`,
     body: `${message}`,
-    icon: path.join(__static, 'app-icon.png'),
+    icon: path.join(__static, 'icons', 'app-icon.png'),
   };
 
   new Notification(notification).show();
