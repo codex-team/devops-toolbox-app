@@ -56,6 +56,10 @@ export default class Transport {
             break;
         }
       },
+      /**
+       * Turn off ctproto's logs
+       */
+      disableLogs: true,
     });
   }
 
