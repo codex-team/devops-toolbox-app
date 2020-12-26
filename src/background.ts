@@ -4,7 +4,12 @@ import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer';
 import path from 'path';
 import notify from './utils/notification';
 import { logger } from './utils/logger';
-import { createClient } from './utils/protocol/transport';
+import Transport from '@/protocol';
+
+/**
+ * API connection
+ */
+const Client = Transport.getInstance().client;
 
 /**
  * Tray element
@@ -186,8 +191,6 @@ if (isDevelopment) {
     });
   }
 }
-
-createClient();
 
 /**
  * Catch uncaught exceptions
