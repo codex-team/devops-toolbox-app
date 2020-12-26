@@ -10,14 +10,14 @@ import { logger } from '@/utils/logger';
  */
 export default class Transport {
   /**
+   * Communication with API
+   */
+  public client: CTProtoClient<AuthorizeMessagePayload, DevopsToolboxAuthData, ApiRequest, ApiResponse, ApiUpdate>;
+
+  /**
    * The instance of Transport
    */
   private static instance: Transport | undefined;
-
-  /**
-   * Communication with API
-   */
-  public client: CTProtoClient<AuthorizeMessagePayload, DevopsToolboxAuthData, ApiRequest, ApiResponse, ApiUpdate>
 
   /**
    * Constructor
@@ -39,6 +39,7 @@ export default class Transport {
        *
        * @param payload - workspaces
        */
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars,@typescript-eslint/no-unused-vars-experimental
       onAuth: (payload: DevopsToolboxAuthData) => {
         logger.info('Authorization success');
       },
@@ -67,7 +68,7 @@ export default class Transport {
    * We create only one instance of Transport and get it
    */
   public static getInstance(): Transport {
-    if (!this.instance){
+    if (!this.instance) {
       this.instance = new Transport();
     }
 

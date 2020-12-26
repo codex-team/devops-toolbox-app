@@ -9,6 +9,7 @@ import Transport from '@/protocol';
 /**
  * API connection
  */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars,@typescript-eslint/no-unused-vars-experimental
 const Client = Transport.getInstance().client;
 
 /**
@@ -99,6 +100,7 @@ async function createWindow(): Promise<void> {
       const yPosition = process.platform === 'darwin' ? y : y - height;
 
       win.setBounds({
+        // eslint-disable-next-line @typescript-eslint/no-magic-numbers
         x: Math.round(x - width / 2),
         y: yPosition,
         height,
