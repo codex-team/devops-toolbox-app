@@ -73,6 +73,8 @@ async function createWindow(): Promise<void> {
     },
   });
 
+  win.setSkipTaskbar(true);
+
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     await win.loadURL(process.env.WEBPACK_DEV_SERVER_URL);
   } else {
