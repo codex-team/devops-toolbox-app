@@ -1,10 +1,12 @@
 import { NewMessage } from 'ctproto';
 
+/**
+ * 'get-workspaces' request payload
+ */
 export interface GetWorkspacesMessagePayload {
   /**
-   * JWT Token
+   * There are no fields here because when authorizing API remembers the token
    */
-  token: string;
 }
 
 /**
