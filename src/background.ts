@@ -67,13 +67,12 @@ async function createWindow(): Promise<void> {
     transparent: true,
     vibrancy: 'dark',
     visualEffectState: 'active',
+    skipTaskbar: true,
     webPreferences: {
       nodeIntegration: true,
       enableRemoteModule: true,
     },
   });
-
-  win.setSkipTaskbar(true);
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     await win.loadURL(process.env.WEBPACK_DEV_SERVER_URL);
