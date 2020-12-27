@@ -94,6 +94,7 @@ async function createWindow(): Promise<void> {
       const yPosition = process.platform === 'darwin' ? y : y - height;
 
       win.setBounds({
+        // eslint-disable-next-line @typescript-eslint/no-magic-numbers
         x: Math.round(x - width / 2),
         y: yPosition,
         height,
