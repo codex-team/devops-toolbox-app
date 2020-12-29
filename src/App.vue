@@ -18,6 +18,10 @@
 import { defineComponent } from 'vue';
 import Server from '@/components/Server.vue';
 import WorkspaceHeader from '@/components/WorkspaceHeader.vue';
+// eslint-disable-next-line no-unused-vars
+import { transport } from '@/background';
+// eslint-disable-next-line no-unused-vars
+import { logger } from '@/utils/logger';
 
 export default defineComponent({
   name: 'App',
@@ -80,6 +84,24 @@ export default defineComponent({
       ],
     };
   },
+  // mounted() {
+  //   try {
+  //     this.getWorkspaces();
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // },
+  // methods: {
+  //   getWorkspaces: function () {
+  //     try {
+  //       transport.send('get-workspaces', {}).then((response) => {
+  //         console.log(response);
+  //       });
+  //     } catch (e) {
+  //       console.log(e);
+  //     }
+  //   },
+  // },
 });
 </script>
 <style>
