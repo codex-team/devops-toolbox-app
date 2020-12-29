@@ -126,7 +126,7 @@ async function createWindow(): Promise<void> {
     await win.loadURL(`${protocolName}://./index.html`);
   }
 
-  const trayIconPath = path.join(__static, 'icons', 'tray-icon.png');
+  const trayIconPath = path.join(__dirname, '..', 'public', 'icons', 'tray-icon.png');
 
   tray = new Tray(trayIconPath);
   tray.on('click', (event, bounds) => {
