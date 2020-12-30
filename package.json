@@ -21,6 +21,7 @@
   "dependencies": {
     "@types/node": "^14.14.9",
     "core-js": "^3.6.5",
+    "ctproto": "^0.0.5",
     "electron": "^10.1.5",
     "electron-updater": "^4.3.5",
     "postcss-apply": "^0.12.0",

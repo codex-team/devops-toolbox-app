@@ -1,9 +1,55 @@
 import { app, protocol, BrowserWindow, Tray, Menu, MenuItemConstructorOptions, MenuItem } from 'electron';
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib';
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer';
-import notify from './utils/notification';
-import { logger } from './utils/logger';
 import path from 'path';
+import { CTProtoClient } from 'ctproto';
+import notify from './utils/notification';
+import { AuthorizeMessagePayload, DevopsToolboxAuthData, ApiRequest, ApiResponse, ApiUpdate } from '@/types/api';
+import Config from '@/config';
+import { logger } from '@/utils/logger';
+
+/**
+ * API connection
+ */
+export const transport = new CTProtoClient<AuthorizeMessagePayload, DevopsToolboxAuthData, ApiRequest, ApiResponse, ApiUpdate>({
+  /**
+   * API url
+   */
+  apiUrl: Config.apiUrl,
+  authRequestPayload: {
+    /**
+     * A unique workspace token that you get when you create it
+     */
+    token: Config.token,
+  },
+  /**
+   * After successful authorization we get all our workspaces
+   *
+   * @param payload - workspaces
+   */
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars,@typescript-eslint/no-unused-vars-experimental
+  onAuth: (payload: DevopsToolboxAuthData) => {
+    logger.info('Authorization success');
+  },
+  /**
+   * When API sends message (inited by him) is like 'workspace-update' we handles it here
+   *
+   * @param data - incoming message
+   */
+  onMessage: (data: ApiUpdate) => {
+    switch (data.type) {
+      case 'workspace-updated':
+        /**
+         * Show updated workspace in app
+         */
+        break;
+    }
+  },
+  /**
+   * Turn off ctproto's logs
+   */
+  disableLogs: true,
+});
 
 /**
  * Tray element
