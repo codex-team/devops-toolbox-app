@@ -15,5 +15,5 @@ export default class Config {
   /**
    * Authorization token
    */
-  public static token: string = process.env.TOKEN || '';
+  public static token: string = process.env.AUTH_TOKEN || '';
 }
