@@ -113,6 +113,7 @@ async function createWindow(): Promise<void> {
     transparent: true,
     vibrancy: 'dark',
     visualEffectState: 'active',
+    skipTaskbar: true,
     webPreferences: {
       nodeIntegration: true,
       enableRemoteModule: true,
