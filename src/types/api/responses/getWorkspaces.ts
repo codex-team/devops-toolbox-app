@@ -1,4 +1,4 @@
-import { Workspace } from '../../../../types';
+import { Workspace } from '../../index';
 import { ResponseMessage } from 'ctproto';
 
 /**

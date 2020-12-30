@@ -10,10 +10,10 @@ export default class Config {
   /**
    * API url
    */
-  public static apiUrl: string = process.env.VUE_APP_API_URL || '';
+  public static apiUrl: string = process.env.API_URL || '';
 
   /**
    * Authorization token
    */
-  public static token: string = process.env.VUE_APP_TOKEN || '';
+  public static token: string = process.env.AUTH_TOKEN || '';
 }
