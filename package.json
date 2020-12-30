@@ -1,7 +1,7 @@
 {
   "name": "devops-toolbox-app",
   "productName": "DevOps Toolbox",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "",
   "author": "CodeX",
   "main": "background.js",
