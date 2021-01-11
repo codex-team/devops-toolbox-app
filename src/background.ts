@@ -7,11 +7,13 @@ import notify from './utils/notification';
 import { AuthorizeMessagePayload, DevopsToolboxAuthData, ApiRequest, ApiResponse, ApiUpdate } from '@/types/api';
 import Config from '@/config';
 import { logger } from '@/utils/logger';
+import Store from '@/store';
 
 /**
  * API connection
  */
-export const transport = new CTProtoClient<AuthorizeMessagePayload, DevopsToolboxAuthData, ApiRequest, ApiResponse, ApiUpdate>({
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types,@typescript-eslint/explicit-function-return-type
+const transprot = new CTProtoClient<AuthorizeMessagePayload, DevopsToolboxAuthData, ApiRequest, ApiResponse, ApiUpdate>({
   /**
    * API url
    */
@@ -29,6 +31,22 @@ export const transport = new CTProtoClient<AuthorizeMessagePayload, DevopsToolbo
    */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars,@typescript-eslint/no-unused-vars-experimental
   onAuth: (payload: DevopsToolboxAuthData) => {
+    /**
+     * ---------------- HELP --------------------
+     * Как получить в App обновленные данные, которые пришли через transport?
+     *
+     *
+     * 1. Пытался использоать Vuex.
+     * При успешной авторизации я делаю isAuth true.
+     * Но такое чувство, что у App и тут разные хранилища и из-за этого true в компоненте App не отображается.
+     * Я не понимаю как получить нужное хранилище.
+     *
+     * 2. Пытался в mounted иницилизировать транспорт.
+     * Пишет, что ws не работает в браузере. Нужно юзать нативный WebSocket.
+     *
+     * 3. Илья нашел вот такую штуку https://github.com/nklayman/vue-cli-plugin-electron-builder/issues/1196
+     */
+    Store.commit('authSuccess');
     logger.info('Authorization success');
   },
   /**
@@ -108,7 +126,7 @@ async function createWindow(): Promise<void> {
     height: 352,
     width: 260,
     frame: false,
-    resizable: false,
+    // resizable: false,
     show: false,
     transparent: true,
     vibrancy: 'dark',

@@ -3,6 +3,7 @@
     <WorkspaceHeader
       :name="name"
       :image="image"
+      :is-auth="actualIsAuth"
     />
     <Server
       v-for="(server, index) in servers"
@@ -18,10 +19,6 @@
 import { defineComponent } from 'vue';
 import Server from '@/components/Server.vue';
 import WorkspaceHeader from '@/components/WorkspaceHeader.vue';
-// eslint-disable-next-line no-unused-vars
-import { transport } from '@/background';
-// eslint-disable-next-line no-unused-vars
-import { logger } from '@/utils/logger';
 
 export default defineComponent({
   name: 'App',
@@ -33,6 +30,7 @@ export default defineComponent({
     return {
       name: 'CodeX',
       image: 'https://avatars1.githubusercontent.com/u/16060815?s=60&v=4',
+      isAuth: this.$store.state.isAuth,
       servers: [
         {
           name: 'Centaur',
@@ -84,26 +82,16 @@ export default defineComponent({
       ],
     };
   },
-  // mounted() {
-  //   try {
-  //     this.getWorkspaces();
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // },
-  // methods: {
-  //   getWorkspaces: function () {
-  //     try {
-  //       transport.send('get-workspaces', {}).then((response) => {
-  //         console.log(response);
-  //       });
-  //     } catch (e) {
-  //       console.log(e);
-  //     }
-  //   },
-  // },
+  computed: {
+    actualIsAuth: function () {
+      console.log(this.$store);
+
+      return this.$store.getters.isAuth;
+    },
+  },
 });
 </script>
+
 <style>
 @import './styles/variables.css';
 
