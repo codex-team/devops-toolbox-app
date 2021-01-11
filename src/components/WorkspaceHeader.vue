@@ -6,6 +6,7 @@
       :alt="name"
     >
     {{ name }}
+    {{ isAuth }}
   </header>
 </template>
 
@@ -29,6 +30,10 @@ export default defineComponent({
       type: String,
       required: false,
       default: '',
+    },
+    isAuth: {
+      type: Boolean,
+      required: true,
     },
   },
 });
