@@ -7,67 +7,6 @@ import notify from './utils/notification';
 import { AuthorizeMessagePayload, DevopsToolboxAuthData, ApiRequest, ApiResponse, ApiUpdate } from '@/types/api';
 import Config from '@/config';
 import { logger } from '@/utils/logger';
-import Store from '@/store';
-
-/**
- * API connection
- */
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types,@typescript-eslint/explicit-function-return-type
-const transprot = new CTProtoClient<AuthorizeMessagePayload, DevopsToolboxAuthData, ApiRequest, ApiResponse, ApiUpdate>({
-  /**
-   * API url
-   */
-  apiUrl: Config.apiUrl,
-  authRequestPayload: {
-    /**
-     * A unique workspace token that you get when you create it
-     */
-    token: Config.token,
-  },
-  /**
-   * After successful authorization we get all our workspaces
-   *
-   * @param payload - workspaces
-   */
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars,@typescript-eslint/no-unused-vars-experimental
-  onAuth: (payload: DevopsToolboxAuthData) => {
-    /**
-     * ---------------- HELP --------------------
-     * Как получить в App обновленные данные, которые пришли через transport?
-     *
-     *
-     * 1. Пытался использоать Vuex.
-     * При успешной авторизации я делаю isAuth true.
-     * Но такое чувство, что у App и тут разные хранилища и из-за этого true в компоненте App не отображается.
-     * Я не понимаю как получить нужное хранилище.
-     *
-     * 2. Пытался в mounted иницилизировать транспорт.
-     * Пишет, что ws не работает в браузере. Нужно юзать нативный WebSocket.
-     *
-     * 3. Илья нашел вот такую штуку https://github.com/nklayman/vue-cli-plugin-electron-builder/issues/1196
-     */
-    Store.commit('authSuccess');
-    logger.info('Authorization success');
-  },
-  /**
-   * When API sends message (inited by him) is like 'workspace-update' we handles it here
-   *
-   * @param data - incoming message
-   */
-  onMessage: (data: ApiUpdate) => {
-    switch (data.type) {
-      case 'workspace-updated':
-        /**
-         * Show updated workspace in app
-         */
-        break;
-    }
-  },
-  /**
-   * Turn off ctproto's logs
-   */
-  disableLogs: true,
-});
 
 /**
  * Tray element
@@ -96,6 +35,7 @@ function createAppMenu(): Menu {
 
   return Menu.buildFromTemplate(template);
 }
+
 /**
  * Node environment
  */
@@ -121,7 +61,7 @@ protocol.registerSchemesAsPrivileged([
 /**
  * Creating window
  */
-async function createWindow(): Promise<void> {
+async function createWindow(): Promise<BrowserWindow> {
   const win = new BrowserWindow({
     height: 352,
     width: 260,
@@ -173,6 +113,8 @@ async function createWindow(): Promise<void> {
   tray.on('right-click', () => {
     tray.popUpContextMenu(menu);
   });
+
+  return win;
 }
 
 /**
@@ -216,7 +158,7 @@ app.on('ready', async () => {
 
   try {
     logger.info('Starting...');
-    await createWindow();
+    const window = await createWindow();
 
     /**
      * Sets AppUserModelID for application on windows for development use.
@@ -237,6 +179,52 @@ app.on('ready', async () => {
     if (!isDevelopment) {
       require('./utils/autoupdater');
     }
+
+    const SUCCESSFUL_AUTHORIZATION = 'successful-authorization';
+    const WORKSPACE_UPDATE = 'workspace-updated';
+
+    /**
+     * API connection
+     */
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types,@typescript-eslint/explicit-function-return-type
+    const transprot = new CTProtoClient<AuthorizeMessagePayload, DevopsToolboxAuthData, ApiRequest, ApiResponse, ApiUpdate>({
+      /**
+       * API url
+       */
+      apiUrl: Config.apiUrl,
+      authRequestPayload: {
+        /**
+         * A unique workspace token that you get when you create it
+         */
+        token: Config.token,
+      },
+      /**
+       * After successful authorization we get all our workspaces
+       *
+       * @param payload - workspaces
+       */
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars,@typescript-eslint/no-unused-vars-experimental
+      onAuth: (payload: DevopsToolboxAuthData) => {
+        window.webContents.send(SUCCESSFUL_AUTHORIZATION, payload.workspaces);
+        logger.info('Authorization success');
+      },
+      /**
+       * When API sends message (inited by him) is like 'workspace-update' we handles it here
+       *
+       * @param data - incoming message
+       */
+      onMessage: (data: ApiUpdate) => {
+        switch (data.type) {
+          case 'workspace-updated':
+            window.webContents.send(WORKSPACE_UPDATE, data.payload.workspace);
+            break;
+        }
+      },
+      /**
+       * Turn off ctproto's logs
+       */
+      disableLogs: true,
+    });
   } catch (error) {
     logger.error(error);
 
