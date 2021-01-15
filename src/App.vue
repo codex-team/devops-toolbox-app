@@ -1,30 +1,25 @@
 <template>
   <div class="container">
-    <WorkspaceHeader
-      :name="name"
+    <Workspace
+      v-for="workspace in actualWorkspaces"
+      :key="workspace.name"
+      :name="workspace.name"
       :image="image"
-      :is-auth="actualIsAuth"
-    />
-    <Server
-      v-for="(server, index) in servers"
-      :key="server.name"
-      :name="server.name"
-      :projects="server.projects"
-      :hotkey="index+1"
+      :servers="workspace.servers"
     />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import Server from '@/components/Server.vue';
-import WorkspaceHeader from '@/components/WorkspaceHeader.vue';
+import { ipcRenderer } from 'electron';
+import Workspace from '@/components/Workspace.vue';
+import { Workspace as IWorkspace } from '@/types';
 
 export default defineComponent({
   name: 'App',
   components: {
-    WorkspaceHeader,
-    Server,
+    Workspace,
   },
   data() {
     return {
@@ -83,11 +78,18 @@ export default defineComponent({
     };
   },
   computed: {
-    actualIsAuth: function () {
-      console.log(this.$store);
-
-      return this.$store.getters.isAuth;
+    actualWorkspaces(): IWorkspace[] {
+      return this.$store.state.workspaces;
     },
+  },
+  mounted() {
+    ipcRenderer.on('successful-authorization', (event, data) => {
+      this.$store.commit('workspacesUpdate', data);
+    });
+
+    ipcRenderer.on('workspace-updated', (event, data) => {
+      this.$store.commit('workspaceUpdate', data);
+    });
   },
 });
 </script>
