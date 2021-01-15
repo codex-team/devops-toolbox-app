@@ -186,7 +186,7 @@ app.on('ready', async () => {
     /**
      * API connection
      */
-    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types,@typescript-eslint/explicit-function-return-type
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars,@typescript-eslint/no-unused-vars-experimental
     const transprot = new CTProtoClient<AuthorizeMessagePayload, DevopsToolboxAuthData, ApiRequest, ApiResponse, ApiUpdate>({
       /**
        * API url
@@ -203,7 +203,6 @@ app.on('ready', async () => {
        *
        * @param payload - workspaces
        */
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars,@typescript-eslint/no-unused-vars-experimental
       onAuth: (payload: DevopsToolboxAuthData) => {
         window.webContents.send(SUCCESSFUL_AUTHORIZATION, payload.workspaces);
         logger.info('Authorization success');
