@@ -24,7 +24,6 @@ import { defineComponent } from 'vue';
 import { remote } from 'electron';
 import TerminalSvg from '../assets/terminal.svg';
 import openSession from '../utils/session';
-import { Service as IService, Project as IProject } from '@/types';
 import Service from '@/components/Service.vue';
 
 export default defineComponent({
@@ -64,23 +63,6 @@ export default defineComponent({
      */
     platformHotkey(): string {
       return (remote.process.platform === 'darwin' ? '⌘' : 'Ctrl+') + this.hotkey;
-    },
-    actualProjects(services: Array<IService>): Array<IProject> {
-      const parsedProjects: Array<IProject> = [];
-      console.log(services);
-      for (const service of services) {
-        console.log(service);
-        // for (const project in service.projects) {
-        //   console.log(project);
-        //
-        //   parsedProjects.push({
-        //     name: project,
-        //     status: false,
-        //   });
-        // }
-      }
-
-      return parsedProjects;
     },
   },
   /**
