@@ -19,10 +19,16 @@ export default defineComponent({
     Project,
   },
   props: {
+    /**
+     * Type of service ('nginx', 'docker', etc.)
+     */
     type: {
       type: String,
       required: true,
     },
+    /**
+     * Service projects
+     */
     projects: {
       type: Array,
       required: true,

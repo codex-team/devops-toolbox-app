@@ -26,14 +26,23 @@ export default defineComponent({
     Server,
   },
   props: {
+    /**
+     * Workspace name
+     */
     name: {
       type: String,
       required: true,
     },
+    /**
+     * Workspace image
+     */
     image: {
       type: String,
       required: true,
     },
+    /**
+     * Workspace servers
+     */
     servers: {
       type: Object,
       required: true,
