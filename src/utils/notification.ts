@@ -10,7 +10,7 @@ function showNotification(message: string): void {
   const notification = {
     title: `${app.getName()}`,
     body: `${message}`,
-    icon: path.join(__dirname, '..', 'public', 'icons', 'tray-icon.png'),
+    icon: path.join(__static, 'icons', 'app-icon.png'),
   };
 
   new Notification(notification).show();
