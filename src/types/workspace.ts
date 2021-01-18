@@ -5,6 +5,11 @@ import Server from './server';
  */
 export default interface Workspace {
   /**
+   * Workspace id
+   */
+  _id: string;
+
+  /**
    * Workspace name
    */
   name: string;
