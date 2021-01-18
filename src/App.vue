@@ -25,65 +25,21 @@ export default defineComponent({
     return {
       name: 'CodeX',
       image: 'https://avatars1.githubusercontent.com/u/16060815?s=60&v=4',
-      isAuth: this.$store.state.isAuth,
-      servers: [
-        {
-          name: 'Centaur',
-          projects: [
-            {
-              name: 'codex.so',
-              status: true,
-            },
-            {
-              name: 'editorjs.io',
-              status: true,
-            },
-            {
-              name: 'stage1.codex.so',
-              status: false,
-            },
-          ],
-        },
-        {
-          name: 'Neptune',
-          projects: [
-            {
-              name: 'api.notes.codex.so',
-              status: true,
-            },
-            {
-              name: 'media.codex.so',
-              status: true,
-            },
-            {
-              name: 'featmap.codex.so',
-              status: true,
-            },
-          ],
-        },
-        {
-          name: 'Hawk Workers',
-          projects: [
-            {
-              name: 'Grouper',
-              status: true,
-            },
-            {
-              name: 'Source Map Worker',
-              status: true,
-            },
-          ],
-        },
-      ],
     };
   },
   computed: {
+    // eslint-disable-next-line jsdoc/require-returns
+    /**
+     * Actual user workspace list
+     *
+     * @returns - workspaces
+     */
     actualWorkspaces(): IWorkspace[] {
       return this.$store.state.workspaces;
     },
   },
   mounted() {
-    ipcRenderer.on('successful-authorization', (event, data) => {
+    ipcRenderer.on('workspaces-updated', (event, data) => {
       this.$store.commit('workspacesUpdate', data);
     });
 

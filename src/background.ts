@@ -66,7 +66,7 @@ async function createWindow(): Promise<BrowserWindow> {
     height: 352,
     width: 260,
     frame: false,
-    // resizable: false,
+    resizable: false,
     show: false,
     transparent: true,
     vibrancy: 'dark',
@@ -180,14 +180,21 @@ app.on('ready', async () => {
       require('./utils/autoupdater');
     }
 
-    const SUCCESSFUL_AUTHORIZATION = 'successful-authorization';
+    /**
+     * Workspaces update event name
+     */
+    const WORKSPACES_UPDATE = 'workspaces-updated';
+
+    /**
+     * Workspace update event name
+     */
     const WORKSPACE_UPDATE = 'workspace-updated';
 
     /**
      * API connection
      */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars,@typescript-eslint/no-unused-vars-experimental
-    const transprot = new CTProtoClient<AuthorizeMessagePayload, DevopsToolboxAuthData, ApiRequest, ApiResponse, ApiUpdate>({
+    const transport = new CTProtoClient<AuthorizeMessagePayload, DevopsToolboxAuthData, ApiRequest, ApiResponse, ApiUpdate>({
       /**
        * API url
        */
@@ -204,7 +211,7 @@ app.on('ready', async () => {
        * @param payload - workspaces
        */
       onAuth: (payload: DevopsToolboxAuthData) => {
-        window.webContents.send(SUCCESSFUL_AUTHORIZATION, payload.workspaces);
+        window.webContents.send(WORKSPACES_UPDATE, payload.workspaces);
         logger.info('Authorization success');
       },
       /**
