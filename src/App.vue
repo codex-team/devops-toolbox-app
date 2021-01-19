@@ -1,8 +1,8 @@
 <template>
   <div class="container">
     <Workspace
-      v-for="workspace in actualWorkspaces"
-      :key="workspace.name"
+      v-for="workspace in getActualWorkspaces"
+      :key="workspace._id"
       :name="workspace.name"
       :image="image"
       :servers="workspace.servers"
@@ -23,18 +23,16 @@ export default defineComponent({
   },
   data() {
     return {
-      name: 'CodeX',
       image: 'https://avatars1.githubusercontent.com/u/16060815?s=60&v=4',
     };
   },
   computed: {
-    // eslint-disable-next-line jsdoc/require-returns
     /**
-     * Actual user workspace list
+     * Return actual user workspace list
      *
      * @returns - workspaces
      */
-    actualWorkspaces(): IWorkspace[] {
+    getActualWorkspaces(): IWorkspace[] {
       return this.$store.state.workspaces;
     },
   },
