@@ -3,7 +3,7 @@
  */
 export default interface Project {
   /**
-    * Project name
+   * Project name
    */
   name: string,
   /**
