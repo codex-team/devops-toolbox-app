@@ -193,7 +193,7 @@ app.on('ready', async () => {
     /**
      * API connection
      */
-    // @typescript-eslint/no-unused-vars,@typescript-eslint/no-unused-vars-experimental
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars,@typescript-eslint/no-unused-vars-experimental
     const transport = new CTProtoClient<AuthorizeMessagePayload, DevopsToolboxAuthData, ApiRequest, ApiResponse, ApiUpdate>({
       /**
        * API url
