@@ -24,7 +24,11 @@ export default createStore({
     workspaceUpdate(state, workspace: Workspace) {
       const index = state.workspaces.findIndex(w => workspace._id === w._id);
 
-      state.workspaces[index] = workspace;
+      if (index != -1) {
+        state.workspaces[index] = workspace;
+      } else {
+        state.workspaces.push(workspace);
+      }
     },
   },
 });
