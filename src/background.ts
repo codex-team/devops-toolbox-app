@@ -9,49 +9,6 @@ import Config from '@/config';
 import { logger } from '@/utils/logger';
 
 /**
- * API connection
- */
-export const transport = new CTProtoClient<AuthorizeMessagePayload, DevopsToolboxAuthData, ApiRequest, ApiResponse, ApiUpdate>({
-  /**
-   * API url
-   */
-  apiUrl: Config.apiUrl,
-  authRequestPayload: {
-    /**
-     * A unique workspace token that you get when you create it
-     */
-    token: Config.token,
-  },
-  /**
-   * After successful authorization we get all our workspaces
-   *
-   * @param payload - workspaces
-   */
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars,@typescript-eslint/no-unused-vars-experimental
-  onAuth: (payload: DevopsToolboxAuthData) => {
-    logger.info('Authorization success');
-  },
-  /**
-   * When API sends message (inited by him) is like 'workspace-update' we handles it here
-   *
-   * @param data - incoming message
-   */
-  onMessage: (data: ApiUpdate) => {
-    switch (data.type) {
-      case 'workspace-updated':
-        /**
-         * Show updated workspace in app
-         */
-        break;
-    }
-  },
-  /**
-   * Turn off ctproto's logs
-   */
-  disableLogs: true,
-});
-
-/**
  * Tray element
  */
 let tray: Tray;
@@ -78,6 +35,7 @@ function createAppMenu(): Menu {
 
   return Menu.buildFromTemplate(template);
 }
+
 /**
  * Node environment
  */
@@ -103,7 +61,7 @@ protocol.registerSchemesAsPrivileged([
 /**
  * Creating window
  */
-async function createWindow(): Promise<void> {
+async function createWindow(): Promise<BrowserWindow> {
   const win = new BrowserWindow({
     height: 352,
     width: 260,
@@ -155,6 +113,8 @@ async function createWindow(): Promise<void> {
   tray.on('right-click', () => {
     tray.popUpContextMenu(menu);
   });
+
+  return win;
 }
 
 /**
@@ -198,7 +158,7 @@ app.on('ready', async () => {
 
   try {
     logger.info('Starting...');
-    await createWindow();
+    const window = await createWindow();
 
     /**
      * Sets AppUserModelID for application on windows for development use.
@@ -219,6 +179,58 @@ app.on('ready', async () => {
     if (!isDevelopment) {
       require('./utils/autoupdater');
     }
+
+    /**
+     * Workspaces update event name
+     */
+    const WORKSPACES_UPDATE = 'workspaces-updated';
+
+    /**
+     * Workspace update event name
+     */
+    const WORKSPACE_UPDATE = 'workspace-updated';
+
+    /**
+     * API connection
+     */
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars,@typescript-eslint/no-unused-vars-experimental
+    const transport = new CTProtoClient<AuthorizeMessagePayload, DevopsToolboxAuthData, ApiRequest, ApiResponse, ApiUpdate>({
+      /**
+       * API url
+       */
+      apiUrl: Config.apiUrl,
+      authRequestPayload: {
+        /**
+         * A unique workspace token that you get when you create it
+         */
+        token: Config.token,
+      },
+      /**
+       * After successful authorization we get all our workspaces
+       *
+       * @param payload - workspaces
+       */
+      onAuth: (payload: DevopsToolboxAuthData) => {
+        window.webContents.send(WORKSPACES_UPDATE, payload.workspaces);
+        logger.info('Authorization success');
+      },
+      /**
+       * When API sends message (inited by him) is like 'workspace-update' we handles it here
+       *
+       * @param data - incoming message
+       */
+      onMessage: (data: ApiUpdate) => {
+        switch (data.type) {
+          case 'workspace-updated':
+            window.webContents.send(WORKSPACE_UPDATE, data.payload.workspace);
+            break;
+        }
+      },
+      /**
+       * Turn off ctproto's logs
+       */
+      disableLogs: true,
+    });
   } catch (error) {
     logger.error(error);
 

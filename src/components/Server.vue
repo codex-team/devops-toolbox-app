@@ -10,11 +10,11 @@
         {{ platformHotkey }}
       </div>
     </header>
-    <Project
-      v-for="project in projects"
-      :key="project.name"
-      :name="project.name"
-      :status="project.status"
+    <Service
+      v-for="(service, index) in services"
+      :key="index"
+      :type="service.type"
+      :projects="service.payload"
     />
   </div>
 </template>
@@ -22,14 +22,14 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { remote } from 'electron';
-import Project from './Project.vue';
 import TerminalSvg from '../assets/terminal.svg';
 import openSession from '../utils/session';
+import Service from '@/components/Service.vue';
 
 export default defineComponent({
   name: 'Server',
   components: {
-    Project,
+    Service,
     TerminalSvg,
   },
   props: {
@@ -43,7 +43,7 @@ export default defineComponent({
     /**
      * Server`s project name
      */
-    projects: {
+    services: {
       type: Array,
       required: true,
     },

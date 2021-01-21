@@ -1,87 +1,53 @@
 <template>
   <div class="container">
-    <WorkspaceHeader
-      :name="name"
+    <Workspace
+      v-for="workspace in getActualWorkspaces"
+      :key="workspace._id"
+      :name="workspace.name"
       :image="image"
-    />
-    <Server
-      v-for="(server, index) in servers"
-      :key="server.name"
-      :name="server.name"
-      :projects="server.projects"
-      :hotkey="index+1"
+      :servers="workspace.servers"
     />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import Server from '@/components/Server.vue';
-import WorkspaceHeader from '@/components/WorkspaceHeader.vue';
+import { ipcRenderer } from 'electron';
+import Workspace from '@/components/Workspace.vue';
+import { Workspace as IWorkspace } from '@/types';
 
 export default defineComponent({
   name: 'App',
   components: {
-    WorkspaceHeader,
-    Server,
+    Workspace,
   },
   data() {
     return {
-      name: 'CodeX',
       image: 'https://avatars1.githubusercontent.com/u/16060815?s=60&v=4',
-      servers: [
-        {
-          name: 'Centaur',
-          projects: [
-            {
-              name: 'codex.so',
-              status: true,
-            },
-            {
-              name: 'editorjs.io',
-              status: true,
-            },
-            {
-              name: 'stage1.codex.so',
-              status: false,
-            },
-          ],
-        },
-        {
-          name: 'Neptune',
-          projects: [
-            {
-              name: 'api.notes.codex.so',
-              status: true,
-            },
-            {
-              name: 'media.codex.so',
-              status: true,
-            },
-            {
-              name: 'featmap.codex.so',
-              status: true,
-            },
-          ],
-        },
-        {
-          name: 'Hawk Workers',
-          projects: [
-            {
-              name: 'Grouper',
-              status: true,
-            },
-            {
-              name: 'Source Map Worker',
-              status: true,
-            },
-          ],
-        },
-      ],
     };
+  },
+  computed: {
+    /**
+     * Return actual user workspace list
+     *
+     * @returns - workspaces
+     */
+    getActualWorkspaces(): IWorkspace[] {
+      return this.$store.state.workspaces;
+    },
+  },
+  mounted() {
+    ipcRenderer.on('workspaces-updated', (event, data) => {
+      this.$store.commit('workspacesUpdate', data);
+    });
+
+    ipcRenderer.on('workspace-updated', (event, data) => {
+      this.$store.commit('workspaceUpdate', data);
+    });
   },
 });
 </script>
+
 <style>
 @import './styles/variables.css';
 
