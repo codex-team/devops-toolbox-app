@@ -2,11 +2,20 @@
   <div class="server">
     <header
       class="server__header"
+      :class="{
+        'server__header--clickable': sshConnectionInfo
+      }"
       @click="openTerminal"
     >
       <span class="server__title">{{ name }}</span>
-      <TerminalSvg class="bash" />
-      <div class="server__hotkey">
+      <TerminalSvg
+        v-if="sshConnectionInfo"
+        class="bash"
+      />
+      <div
+        v-if="sshConnectionInfo"
+        class="server__hotkey"
+      >
         {{ platformHotkey }}
       </div>
     </header>
@@ -48,6 +57,13 @@ export default defineComponent({
       required: true,
     },
     /**
+     * Values for ssh connection to server
+     */
+    sshConnectionInfo: {
+      type: Object || null,
+      required: true,
+    },
+    /**
      * Server`s hotkey
      */
     hotkey: {
@@ -73,7 +89,14 @@ export default defineComponent({
      * Function for open terminal with custom command
      */
     openTerminal(): void {
-      const command = 'ssh root@stage.hawk.so';
+      if (!this.sshConnectionInfo) {
+        return;
+      }
+      let command = `ssh ${this.sshConnectionInfo.username}@${this.sshConnectionInfo.ip}`;
+
+      if (this.sshConnectionInfo.port) {
+        command += ` -p ${this.sshConnectionInfo.port}`;
+      }
 
       openSession(command);
     },
@@ -97,7 +120,11 @@ export default defineComponent({
     font-weight: bold;
     color: var(--color-text-main);
     margin-bottom: 10px;
-    cursor: pointer;
+    cursor: default;
+
+    &--clickable {
+      cursor: pointer;
+    }
   }
 
   &__hotkey {

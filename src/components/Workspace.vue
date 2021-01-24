@@ -6,9 +6,10 @@
     />
     <Server
       v-for="(server, index) in servers"
-      :key="server.name"
+      :key="index"
       :name="server.name"
       :services="server.services"
+      :ssh-connection-info="server.sshConnectionInfo"
       :hotkey="index+1"
     />
   </div>
@@ -44,7 +45,7 @@ export default defineComponent({
      * Workspace servers
      */
     servers: {
-      type: Object,
+      type: Array,
       required: true,
     },
   },
