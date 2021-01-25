@@ -2,16 +2,25 @@
   <div class="server">
     <header
       class="server__header"
+      :class="{
+        'server__header--clickable': server.sshConnectionInfo
+      }"
       @click="openTerminal"
     >
-      <span class="server__title">{{ name }}</span>
-      <TerminalSvg class="bash" />
-      <div class="server__hotkey">
+      <span class="server__title">{{ server.name }}</span>
+      <TerminalSvg
+        v-if="server.sshConnectionInfo"
+        class="bash"
+      />
+      <div
+        v-if="server.sshConnectionInfo"
+        class="server__hotkey"
+      >
         {{ platformHotkey }}
       </div>
     </header>
     <Service
-      v-for="(service, index) in services"
+      v-for="(service, index) in server.services"
       :key="index"
       :type="service.type"
       :projects="service.payload"
@@ -20,11 +29,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, PropType } from 'vue';
 import { remote } from 'electron';
 import TerminalSvg from '../assets/terminal.svg';
 import openSession from '../utils/session';
 import Service from '@/components/Service.vue';
+import { Server } from '@/types';
 
 export default defineComponent({
   name: 'Server',
@@ -34,17 +44,10 @@ export default defineComponent({
   },
   props: {
     /**
-     * Server name
+     * Information about server
      */
-    name: {
-      type: String,
-      required: true,
-    },
-    /**
-     * Server`s project name
-     */
-    services: {
-      type: Array,
+    server: {
+      type: Object as PropType<Server>,
       required: true,
     },
     /**
@@ -73,7 +76,14 @@ export default defineComponent({
      * Function for open terminal with custom command
      */
     openTerminal(): void {
-      const command = 'ssh root@stage.hawk.so';
+      if (!this.server.sshConnectionInfo) {
+        return;
+      }
+      let command = `ssh ${this.server.sshConnectionInfo.username}@${this.server.sshConnectionInfo.ip}`;
+
+      if (this.server.sshConnectionInfo.port) {
+        command += ` -p ${this.server.sshConnectionInfo.port}`;
+      }
 
       openSession(command);
     },
@@ -97,7 +107,11 @@ export default defineComponent({
     font-weight: bold;
     color: var(--color-text-main);
     margin-bottom: 10px;
-    cursor: pointer;
+    cursor: default;
+
+    &--clickable {
+      cursor: pointer;
+    }
   }
 
   &__hotkey {
