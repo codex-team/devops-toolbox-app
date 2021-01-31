@@ -9,13 +9,16 @@ import { BrowserWindow, Rectangle } from 'electron';
 export default function calcWindowBounds(windowPosition: WindowPosition, win: BrowserWindow, screenBounds: Rectangle):Partial<Rectangle> {
   const { x, y } = screenBounds;
   const { height, width } = win.getBounds();
-  const xPosition = (windowPosition === 'trayBottomLeft')
-    ? Math.round(x)
-    : (windowPosition === ('trayBottomRight'))
-      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-      ? Math.round(window.screen.width)
-      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-      : Math.round(x - width / 2);
+  let xPosition;
+
+  if (windowPosition === 'trayBottomLeft') {
+    xPosition = Math.round(x);
+  } else if (windowPosition === 'trayBottomRight') {
+    xPosition = Math.round(window.screen.width);
+  } else {
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    xPosition = Math.round(x - width / 2);
+  }
   const yPosition = windowPosition === ('trayCenter' || 'topRight') ? y : y - height;
 
   return {
