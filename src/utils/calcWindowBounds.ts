@@ -1,5 +1,5 @@
 import { WindowPosition } from '@/utils/getWindowPosition';
-import { BrowserWindow, Rectangle } from 'electron';
+import { BrowserWindow, Rectangle, screen } from 'electron';
 
 /**
  * @param windowPosition - place of the app window on the screen
@@ -9,17 +9,29 @@ import { BrowserWindow, Rectangle } from 'electron';
 export default function calcWindowBounds(windowPosition: WindowPosition, win: BrowserWindow, screenBounds: Rectangle):Partial<Rectangle> {
   const { x, y } = screenBounds;
   const { height, width } = win.getBounds();
+  const display = screen.getPrimaryDisplay();
+  const displayWidth = display.bounds.width;
   let xPosition;
+  let yPosition;
 
   if (windowPosition === 'trayBottomLeft') {
-    xPosition = Math.round(x);
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    xPosition = Math.round(x + width * 0.5);
   } else if (windowPosition === 'trayBottomRight') {
-    xPosition = Math.round(window.screen.width);
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    xPosition = Math.round(displayWidth - width * 1.5);
   } else {
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-    xPosition = Math.round(x - width / 2);
+    xPosition = Math.round(x - width * 0.5);
   }
-  const yPosition = windowPosition === ('trayCenter' || 'topRight') ? y : y - height;
+  if (windowPosition === 'trayCenter' && process.platform === 'darwin') {
+    yPosition = y;
+  } else if (windowPosition === 'trayCenter') {
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    yPosition = y + Math.round(height * 0.1);
+  } else {
+    yPosition = y - height;
+  }
 
   return {
     x: xPosition,
