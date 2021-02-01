@@ -7,6 +7,7 @@ import notify from './utils/notification';
 import { AuthorizeMessagePayload, DevopsToolboxAuthData, ApiRequest, ApiResponse, ApiUpdate } from '@/types/api';
 import Config from '@/config';
 import { logger } from '@/utils/logger';
+import { autoLaunch } from '@/utils/autolaunch';
 
 /**
  * Tray element
@@ -262,3 +263,5 @@ process.on('uncaughtException', (err) => {
   logger.error(err);
   throw err;
 });
+
+autoLaunch();
