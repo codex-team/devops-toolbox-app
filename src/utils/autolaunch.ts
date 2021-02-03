@@ -1,25 +1,34 @@
 import AutoLaunch from 'auto-launch';
-import { logger } from '@/utils/logger';
+import { app } from 'electron';
 
 /**
- * Auto launch app function
- * The app launch when you turn on PC
+ * The path to app
  */
-export function autoLaunch(): void{
-  const Toolbox = new AutoLaunch({
-    name: 'DevOps Toolbox',
-    path: '/Applications/DevOps Toolbox.app',
-  });
+const appPath = app.getPath('exe').replace(/\.app\/Content.*/, '.app');
 
-  Toolbox.enable();
+/**
+ * The app name
+ */
+const appName = app.getName();
 
-  Toolbox.isEnabled()
+/**
+ * Auto launch instance
+ */
+const launch = new AutoLaunch({
+  name: appName,
+  path: appPath,
+});
+
+/**
+ * Toggle launch state
+ */
+export function toggle(): void {
+  launch.isEnabled()
     .then((isEnabled: boolean) => {
-      if (!isEnabled) {
-        Toolbox.enable();
+      if (isEnabled) {
+        launch.disable();
+      } else {
+        launch.enable();
       }
-    })
-    .catch((err: Error) => {
-      logger.error(err);
     });
 }
