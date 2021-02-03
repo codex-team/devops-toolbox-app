@@ -7,7 +7,7 @@ import notify from './utils/notification';
 import { AuthorizeMessagePayload, DevopsToolboxAuthData, ApiRequest, ApiResponse, ApiUpdate } from '@/types/api';
 import Config from '@/config';
 import { logger } from '@/utils/logger';
-import { toggle } from '@/utils/autolaunch';
+import { enableAutoLaunch } from '@/utils/autolaunch';
 
 /**
  * Tray element
@@ -267,4 +267,4 @@ process.on('uncaughtException', (err) => {
 /**
  * Turn on auto launch
  */
-toggle();
+enableAutoLaunch();
