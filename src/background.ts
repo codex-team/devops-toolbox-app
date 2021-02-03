@@ -89,6 +89,7 @@ async function createWindow(): Promise<BrowserWindow> {
 
   const trayIconPath = path.join(__static, 'icons', 'tray-icon.png');
 
+  win.addListener('blur', win.hide);
   tray = new Tray(trayIconPath);
   tray.on('click', (event, bounds) => {
     if (win.isVisible()) {
