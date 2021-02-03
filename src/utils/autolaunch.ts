@@ -2,11 +2,6 @@ import AutoLaunch from 'auto-launch';
 import { app } from 'electron';
 
 /**
- * The path to app
- */
-const appPath = app.getPath('exe').replace(/\.app\/Content.*/, '.app');
-
-/**
  * The app name
  */
 const appName = app.getName();
@@ -14,21 +9,28 @@ const appName = app.getName();
 /**
  * Auto launch instance
  */
-const launch = new AutoLaunch({
+const autoLaunch = new AutoLaunch({
   name: appName,
-  path: appPath,
 });
 
 /**
- * Toggle launch state
+ * The function to enable auto launch
  */
-export function toggle(): void {
-  launch.isEnabled()
-    .then((isEnabled: boolean) => {
+export function enableAutoLaunch(): void {
+  autoLaunch.enable();
+}
+
+/**
+ * The function to toggle auto launch state.
+ * In the future we'll create settings and user can turn off auto launch
+ */
+export function autoLaunchToggle(): void {
+  autoLaunch.isEnabled()
+    .then(async (isEnabled: boolean) => {
       if (isEnabled) {
-        launch.disable();
+        await autoLaunch.disable();
       } else {
-        launch.enable();
+        await autoLaunch.enable();
       }
     });
 }
