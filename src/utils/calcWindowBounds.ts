@@ -13,16 +13,13 @@ export default function calcWindowBounds(windowPosition: WindowPosition, win: Br
   const displayWidth = display.bounds.width;
   let xPosition;
   let yPosition;
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-  const dockHeight = Math.round(height * 0.1);
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-  const dockWidth = width * 0.5;
+  const dockHeight = 40;
+  const dockWidth = 124;
 
   if (windowPosition === 'trayBottomLeft') {
     xPosition = Math.round(x + dockWidth);
   } else if (windowPosition === 'trayBottomRight') {
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-    xPosition = Math.round(displayWidth - width + dockWidth);
+    xPosition = Math.round(displayWidth - (width + dockWidth));
   } else {
     xPosition = Math.round(x - dockWidth);
   }
