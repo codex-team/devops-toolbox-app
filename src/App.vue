@@ -67,8 +67,8 @@ body {
   width: 100%;
   height: 100vh;
   object-fit: contain;
-  background: rgba(31, 59, 88, 1);
-  border-radius: 8px;
+  background: var(--color-bg-app);
+  border-radius: 14px;
 }
 
 #app::-webkit-scrollbar {
