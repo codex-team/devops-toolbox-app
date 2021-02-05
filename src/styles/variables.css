@@ -1,7 +1,7 @@
 :root {
   /* Colors for texts */
   --color-text-warning: #f74f4f;
-  --color-text-second: #cadafb;
+  --color-text-second: rgba(195, 214, 255, 0.7);
   --color-text-main: #ffffff;
 
   /* Colors for backgrounds*/

@@ -69,7 +69,6 @@ async function createWindow(): Promise<BrowserWindow> {
     resizable: false,
     show: false,
     transparent: true,
-    vibrancy: 'dark',
     visualEffectState: 'active',
     skipTaskbar: true,
     webPreferences: {
