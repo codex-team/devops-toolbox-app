@@ -67,7 +67,7 @@ body {
   width: 100%;
   height: 100vh;
   object-fit: contain;
-  background: #1F202A;
+  background: var(--color-bg-app);
   border-radius: 14px;
 }
 
