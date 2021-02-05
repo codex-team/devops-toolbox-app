@@ -87,6 +87,9 @@ async function createWindow(): Promise<BrowserWindow> {
 
   const trayIconPath = path.join(__static, 'icons', 'tray-icon.png');
 
+  /**
+   * Hides window if clicked on tray or outside the window
+   */
   win.addListener('blur', () => {
     if (isClickOnTray(tray)) {
       win.hide();
