@@ -5,7 +5,9 @@
 import { Rectangle, screen as electronScreen, Tray } from 'electron';
 
 const trayToScreenRects = (tray: Tray): [Rectangle, Rectangle] => {
-  // There may be more than one screen, so we need to figure out on which screen our tray icon lives.
+  /**
+   * There may be more than one screen, so we need to figure out on which screen our tray icon lives.
+   */
   const {
     workArea,
     bounds: screenBounds,
@@ -29,34 +31,47 @@ type TaskbarLocation = 'top' | 'bottom' | 'left' | 'right';
 export function taskbarLocation(tray: Tray): TaskbarLocation {
   const [screenBounds, workArea] = trayToScreenRects(tray);
 
-  // TASKBAR LEFT
+  /**
+   TASKBAR LEFT
+   */
   if (workArea.x > 0) {
-    // The workspace starts more on the right
+    /**
+     * The workspace starts more on the right
+     */
     return 'left';
   }
 
-  // TASKBAR TOP
+  /**
+   TASKBAR TOP
+   */
   if (workArea.y > 0) {
     return 'top';
   }
 
-  // TASKBAR RIGHT
-  // Here both workArea.y and workArea.x are 0 so we can no longer leverage them.
-  // We can use the workarea and display width though.
-  // Determine taskbar location
+  /**
+   * TASKBAR RIGHT
+   *  Here both workArea.y and workArea.x are 0 so we can no longer leverage them.
+   *  We can use the workarea and display width though.
+   *  Determine taskbar location
+   */
+
   if (workArea.width < screenBounds.width) {
-    // The taskbar is either on the left or right, but since the LEFT case was handled above,
-    // we can be sure we're dealing with a right taskbar
+    /**
+     * The taskbar is either on the left or right, but since the LEFT case was handled above,
+     * we can be sure we're dealing with a right taskbar
+     */
     return 'right';
   }
 
-  // TASKBAR BOTTOM
-  // Since all the other cases were handled, we can be sure we're dealing with a bottom taskbar
+  /**
+   *  TASKBAR BOTTOM
+   * Since all the other cases were handled, we can be sure we're dealing with a bottom taskbar
+   */
+
   return 'bottom';
 }
 
-export type WindowPosition =
-  | 'trayCenter'
+export type WindowPosition = 'trayCenter'
   | 'topRight'
   | 'trayBottom'
   | 'trayBottomLeft'
@@ -70,16 +85,22 @@ export type WindowPosition =
  */
 export function getWindowPosition(tray: Tray): WindowPosition {
   switch (process.platform) {
-    // macOS
-    // Supports top taskbars
+    /**
+     macOS
+     Supports top taskbars
+     */
     case 'darwin':
       return 'trayCenter';
-    // Windows and Linux
-    // Supports top/bottom/left/right taskbar, default bottom
+    /**
+     Windows and Linux
+     Supports top/bottom/left/right taskbar, default bottom
+     */
     default: {
       const traySide = taskbarLocation(tray);
 
-      // Assign position for menubar
+      /**
+       Assign position for menubar
+       */
       if (traySide === 'top') {
         return 'trayCenter';
       }
@@ -95,6 +116,8 @@ export function getWindowPosition(tray: Tray): WindowPosition {
     }
   }
 
-  // When we really don't know, we just show the menubar on the top-right
+  /**
+   When we really don't know, we just show the menubar on the top-right
+   */
   return 'topRight';
 }

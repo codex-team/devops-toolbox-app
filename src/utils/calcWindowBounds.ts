@@ -13,22 +13,24 @@ export default function calcWindowBounds(windowPosition: WindowPosition, win: Br
   const displayWidth = display.bounds.width;
   let xPosition;
   let yPosition;
+  const topIndent = 10;
+  const sideIndent = 5;
   const dockHeight = 40;
   const dockWidth = 124;
 
   if (windowPosition === 'trayBottomLeft') {
-    xPosition = Math.round(x + dockWidth);
+    xPosition = Math.round(dockWidth + sideIndent);
   } else if (windowPosition === 'trayBottomRight') {
-    xPosition = Math.round(displayWidth - (width + dockWidth));
+    xPosition = Math.round(displayWidth - (width + dockWidth + sideIndent));
   } else {
     xPosition = Math.round(x - dockWidth);
   }
   if (windowPosition === 'trayCenter' && process.platform === 'darwin') {
-    yPosition = y;
+    yPosition = y + topIndent;
   } else if (windowPosition === 'trayCenter') {
-    yPosition = y + dockHeight;
+    yPosition = y + (dockHeight + topIndent);
   } else {
-    yPosition = y - height;
+    yPosition = y - (height + topIndent);
   }
 
   return {
