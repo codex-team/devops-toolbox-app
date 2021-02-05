@@ -199,7 +199,7 @@ app.on('ready', async () => {
     /**
      * API connection
      */
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars,@typescript-eslint/no-unused-vars-experimental
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars,@typescript-eslint/no-unused-vars-experimental,no-unused-vars
     const transport = new CTProtoClient<AuthorizeMessagePayload, DevopsToolboxAuthData, ApiRequest, ApiResponse, ApiUpdate>({
       /**
        * API url
