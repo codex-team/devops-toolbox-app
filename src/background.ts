@@ -7,6 +7,7 @@ import notify from './utils/notification';
 import { AuthorizeMessagePayload, DevopsToolboxAuthData, ApiRequest, ApiResponse, ApiUpdate } from '@/types/api';
 import Config from '@/config';
 import { logger } from '@/utils/logger';
+import isClickOnTray from '@/utils/isClickOnTray';
 
 /**
  * Tray element
@@ -86,7 +87,12 @@ async function createWindow(): Promise<BrowserWindow> {
 
   const trayIconPath = path.join(__static, 'icons', 'tray-icon.png');
 
-  win.addListener('blur', win.hide);
+  win.addListener('blur', () => {
+    if (isClickOnTray(tray)) {
+      win.hide();
+    }
+  });
+
   tray = new Tray(trayIconPath);
   tray.on('click', (event, bounds) => {
     const { x, y } = bounds;
