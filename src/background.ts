@@ -85,6 +85,7 @@ async function createWindow(): Promise<BrowserWindow> {
     await win.loadURL(`${protocolName}://./index.html`);
   }
 
+  // eslint-disable-next-line no-undef
   const trayIconPath = path.join(__static, 'icons', 'tray-icon.png');
 
   win.addListener('blur', () => {

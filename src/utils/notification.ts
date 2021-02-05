@@ -10,6 +10,7 @@ function showNotification(message: string): void {
   const notification = {
     title: `${app.getName()}`,
     body: `${message}`,
+    // eslint-disable-next-line no-undef
     icon: path.join(__static, 'icons', 'app-icon.png'),
   };
 
