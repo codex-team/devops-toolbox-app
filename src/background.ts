@@ -7,6 +7,7 @@ import notify from './utils/notification';
 import { AuthorizeMessagePayload, DevopsToolboxAuthData, ApiRequest, ApiResponse, ApiUpdate } from '@/types/api';
 import Config from '@/config';
 import { logger } from '@/utils/logger';
+import isClickOnTray from '@/utils/isClickOnTray';
 import { enableAutoLaunch } from '@/utils/autolaunch';
 
 /**
@@ -87,7 +88,15 @@ async function createWindow(): Promise<BrowserWindow> {
 
   const trayIconPath = path.join(__static, 'icons', 'tray-icon.png');
 
-  win.addListener('blur', win.hide);
+  /**
+   * Hides window if clicked on tray or outside the window
+   */
+  win.addListener('blur', () => {
+    if (isClickOnTray(tray)) {
+      win.hide();
+    }
+  });
+
   tray = new Tray(trayIconPath);
   tray.on('click', (event, bounds) => {
     const { x, y } = bounds;
@@ -194,7 +203,7 @@ app.on('ready', async () => {
     /**
      * API connection
      */
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars,@typescript-eslint/no-unused-vars-experimental
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars,@typescript-eslint/no-unused-vars-experimental,no-unused-vars
     const transport = new CTProtoClient<AuthorizeMessagePayload, DevopsToolboxAuthData, ApiRequest, ApiResponse, ApiUpdate>({
       /**
        * API url
