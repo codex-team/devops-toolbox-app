@@ -1,7 +1,7 @@
 :root {
   /* Colors for texts */
   --color-text-warning: #f74f4f;
-  --color-text-second: #cadafb;
+  --color-text-second: rgba(195, 214, 255, 0.7);
   --color-text-main: #ffffff;
 
   /* Colors for backgrounds*/
@@ -9,6 +9,7 @@
   --color-bg-warning: #f74f4f;
   --color-project: #cadafb;
   --color-bg-status: #ffffff;
+  --color-bg-app:  #1F202A;
 
   /* Colors for box shadow property */
   --color-box-shadow-warning: rgba(247, 79, 79, 0.2);
