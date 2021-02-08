@@ -8,6 +8,7 @@ import { AuthorizeMessagePayload, DevopsToolboxAuthData, ApiRequest, ApiResponse
 import Config from '@/config';
 import { logger } from '@/utils/logger';
 import isClickOnTray from '@/utils/isClickOnTray';
+import { enableAutoLaunch } from '@/utils/autolaunch';
 
 /**
  * Tray element
@@ -271,3 +272,8 @@ process.on('uncaughtException', (err) => {
   logger.error(err);
   throw err;
 });
+
+/**
+ * Turn on auto launch
+ */
+enableAutoLaunch();
