@@ -7,6 +7,8 @@ import notify from './utils/notification';
 import { AuthorizeMessagePayload, DevopsToolboxAuthData, ApiRequest, ApiResponse, ApiUpdate } from '@/types/api';
 import Config from '@/config';
 import { logger } from '@/utils/logger';
+import calcWindowBounds from '@/utils/calcWindowBounds';
+import { getWindowPosition } from '@/utils/getWindowPosition';
 import isClickOnTray from '@/utils/isClickOnTray';
 import { enableAutoLaunch } from '@/utils/autolaunch';
 
@@ -98,22 +100,15 @@ async function createWindow(): Promise<BrowserWindow> {
   });
 
   tray = new Tray(trayIconPath);
+  tray.setIgnoreDoubleClickEvents(true);
   tray.on('click', (event, bounds) => {
-    const { x, y } = bounds;
-    const { height, width } = win.getBounds();
-
     if (win.isVisible()) {
       win.hide();
     } else {
-      const yPosition = process.platform === 'darwin' ? y : y - height;
+      const windowPosition = getWindowPosition(tray);
+      const windowBounds = calcWindowBounds(windowPosition, win, bounds, tray);
 
-      win.setBounds({
-        // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-        x: Math.round(x - width / 2),
-        y: yPosition,
-        height,
-        width,
-      });
+      win.setBounds(windowBounds);
       win.show();
     }
   });
