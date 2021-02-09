@@ -5,7 +5,7 @@ import {BrowserWindow, Rectangle, screen as electronScreen, screen, Tray} from '
  * @param windowPosition - place of the app window on the screen
  * @param win - app window
  * @param screenBounds - bounds of the screen
- * @param tray
+ * @param tray - tray, what is used while icon click
  */
 export default function calcWindowBounds(windowPosition: WindowPosition, win: BrowserWindow, screenBounds: Rectangle, tray: Tray):Partial<Rectangle> {
   const { x, y } = screenBounds;
