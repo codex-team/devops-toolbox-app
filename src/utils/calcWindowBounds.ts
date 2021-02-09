@@ -2,6 +2,8 @@ import { WindowPosition } from '@/utils/getWindowPosition';
 import {BrowserWindow, Rectangle, screen as electronScreen, screen, Tray} from 'electron';
 
 /**
+ * Returns bounds for window to set
+ *
  * @param windowPosition - place of the app window on the screen
  * @param win - app window
  * @param screenBounds - bounds of the screen
@@ -16,7 +18,13 @@ export default function calcWindowBounds(windowPosition: WindowPosition, win: Br
   const { workArea } = electronScreen.getDisplayMatching(tray.getBounds());
   let xPosition;
   let yPosition;
+  /**
+   * Amount of pixels to locate window app from top & bottom
+   */
   const topIndent = 10;
+  /**
+   * Amount of pixels to locate window app from left & right
+   */
   const sideIndent = 5;
   const dockHeight = Math.abs(workArea.height - displayHeight);
   const dockWidth = Math.abs(workArea.width - displayWidth);

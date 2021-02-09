@@ -3,6 +3,11 @@
  */
 import { Rectangle, screen as electronScreen, Tray } from 'electron';
 
+/**
+ * Returns bounds of closest display to tray
+ *
+ * @param tray - The Electron Tray instance.
+ */
 const trayToScreenRects = (tray: Tray): [Rectangle, Rectangle] => {
   /**
    * There may be more than one screen, so we need to figure out on which screen our tray icon lives.
@@ -18,6 +23,9 @@ const trayToScreenRects = (tray: Tray): [Rectangle, Rectangle] => {
   return [screenBounds, workArea];
 };
 
+/**
+ * Type for describing the location of the taskbar on the screen(windows & linux)
+ */
 type TaskbarLocation = 'top' | 'bottom' | 'left' | 'right';
 
 /**
@@ -68,6 +76,9 @@ export function taskbarLocation(tray: Tray): TaskbarLocation {
   return 'bottom';
 }
 
+/**
+ * Type for describing window position on the screen depends on tray location(windows & linux)
+ */
 export type WindowPosition = 'trayCenter'
   | 'topRight'
   | 'trayBottom'
