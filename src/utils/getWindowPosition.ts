@@ -21,7 +21,6 @@ export function trayToScreenRects(tray: Tray): [Rectangle, Rectangle] {
   workArea.y -= screenBounds.y;
 
   return [screenBounds, workArea];
-};
 }
 
 /**
