@@ -8,7 +8,7 @@ import { Rectangle, screen as electronScreen, Tray } from 'electron';
  *
  * @param tray - The Electron Tray instance.
  */
-const trayToScreenRects = (tray: Tray): [Rectangle, Rectangle] => {
+export function trayToScreenRects(tray: Tray): [Rectangle, Rectangle] {
   /**
    * There may be more than one screen, so we need to figure out on which screen our tray icon lives.
    */
@@ -22,6 +22,7 @@ const trayToScreenRects = (tray: Tray): [Rectangle, Rectangle] => {
 
   return [screenBounds, workArea];
 };
+}
 
 /**
  * Type for describing the location of the taskbar on the screen(windows & linux)
