@@ -26,10 +26,10 @@ export default function calcWindowBounds(windowPosition: WindowPosition, win: Br
   } else if (windowPosition === 'trayBottomRight') {
     xPosition = Math.round(displayWidth - (width + dockWidth + sideIndent));
   } else {
-    xPosition = Math.round(x - dockWidth);
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    xPosition = Math.round(x - (dockWidth + (width - tray.getBounds().width) * 0.5));
   }
   if (windowPosition === 'trayCenter' && process.platform === 'darwin') {
-    console.log(displayWidth, displayHeight, workArea);
     yPosition = y + (workArea.y + topIndent);
   } else if (windowPosition === 'trayCenter') {
     yPosition = y + (dockHeight + topIndent);
