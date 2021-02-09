@@ -25,8 +25,8 @@ jobs:
       - name: Make envfile
         uses: SpicyPizza/create-envfile@v1
         with:
-          envkey_API_URL: ${{ secrets.API_URL }}
-          envkey_AUTH_TOKEN: ${{ secrets.AUTH_TOKEN }}
+          envkey_VUE_APP_API_URL: ${{ secrets.VUE_APP_API_URL }}
+          envkey_VUE_APP_AUTH_TOKEN: ${{ secrets.VUE_APP_AUTH_TOKEN }}
 
       - name: Build and release
         uses: samuelmeuli/action-electron-builder@v1
