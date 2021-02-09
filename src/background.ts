@@ -7,6 +7,10 @@ import notify from './utils/notification';
 import { AuthorizeMessagePayload, DevopsToolboxAuthData, ApiRequest, ApiResponse, ApiUpdate } from '@/types/api';
 import Config from '@/config';
 import { logger } from '@/utils/logger';
+import calcWindowBounds from '@/utils/calcWindowBounds';
+import { getWindowPosition } from '@/utils/getWindowPosition';
+import isClickOnTray from '@/utils/isClickOnTray';
+import { enableAutoLaunch } from '@/utils/autolaunch';
 
 /**
  * Tray element
@@ -69,7 +73,6 @@ async function createWindow(): Promise<BrowserWindow> {
     resizable: false,
     show: false,
     transparent: true,
-    vibrancy: 'dark',
     visualEffectState: 'active',
     skipTaskbar: true,
     webPreferences: {
@@ -87,23 +90,25 @@ async function createWindow(): Promise<BrowserWindow> {
 
   const trayIconPath = path.join(__static, 'icons', 'tray-icon.png');
 
-  tray = new Tray(trayIconPath);
-  tray.on('click', (event, bounds) => {
-    const { x, y } = bounds;
-    const { height, width } = win.getBounds();
+  /**
+   * Hides window if clicked on tray or outside the window
+   */
+  win.addListener('blur', () => {
+    if (isClickOnTray(tray)) {
+      win.hide();
+    }
+  });
 
+  tray = new Tray(trayIconPath);
+  tray.setIgnoreDoubleClickEvents(true);
+  tray.on('click', (event, bounds) => {
     if (win.isVisible()) {
       win.hide();
     } else {
-      const yPosition = process.platform === 'darwin' ? y : y - height;
+      const windowPosition = getWindowPosition(tray);
+      const windowBounds = calcWindowBounds(windowPosition, win, bounds, tray);
 
-      win.setBounds({
-        // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-        x: Math.round(x - width / 2),
-        y: yPosition,
-        height,
-        width,
-      });
+      win.setBounds(windowBounds);
       win.show();
     }
   });
@@ -193,7 +198,7 @@ app.on('ready', async () => {
     /**
      * API connection
      */
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars,@typescript-eslint/no-unused-vars-experimental
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars,@typescript-eslint/no-unused-vars-experimental,no-unused-vars
     const transport = new CTProtoClient<AuthorizeMessagePayload, DevopsToolboxAuthData, ApiRequest, ApiResponse, ApiUpdate>({
       /**
        * API url
@@ -262,3 +267,8 @@ process.on('uncaughtException', (err) => {
   logger.error(err);
   throw err;
 });
+
+/**
+ * Turn on auto launch
+ */
+enableAutoLaunch();

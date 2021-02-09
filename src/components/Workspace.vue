@@ -7,18 +7,17 @@
     <Server
       v-for="(server, index) in servers"
       :key="index"
-      :name="server.name"
-      :services="server.services"
-      :ssh-connection-info="server.sshConnectionInfo"
+      :server="server"
       :hotkey="index+1"
     />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, PropType } from 'vue';
 import WorkspaceHeader from '@/components/WorkspaceHeader.vue';
 import Server from '@/components/Server.vue';
+import IServer from '@/types/server';
 
 export default defineComponent({
   name: 'Workspace',
@@ -45,7 +44,7 @@ export default defineComponent({
      * Workspace servers
      */
     servers: {
-      type: Array,
+      type: Array as PropType<Array<IServer>>,
       required: true,
     },
   },

@@ -3,24 +3,24 @@
     <header
       class="server__header"
       :class="{
-        'server__header--clickable': sshConnectionInfo
+        'server__header--clickable': server.sshConnectionInfo
       }"
       @click="openTerminal"
     >
-      <span class="server__title">{{ name }}</span>
+      <span class="server__title">{{ server.name }}</span>
       <TerminalSvg
-        v-if="sshConnectionInfo"
+        v-if="server.sshConnectionInfo"
         class="bash"
       />
       <div
-        v-if="sshConnectionInfo"
+        v-if="server.sshConnectionInfo"
         class="server__hotkey"
       >
         {{ platformHotkey }}
       </div>
     </header>
     <Service
-      v-for="(service, index) in services"
+      v-for="(service, index) in server.services"
       :key="index"
       :type="service.type"
       :projects="service.payload"
@@ -29,11 +29,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, PropType } from 'vue';
 import { remote } from 'electron';
 import TerminalSvg from '../assets/terminal.svg';
 import openSession from '../utils/session';
 import Service from '@/components/Service.vue';
+import { Server } from '@/types';
 
 export default defineComponent({
   name: 'Server',
@@ -43,24 +44,10 @@ export default defineComponent({
   },
   props: {
     /**
-     * Server name
+     * Information about server
      */
-    name: {
-      type: String,
-      required: true,
-    },
-    /**
-     * Server`s project name
-     */
-    services: {
-      type: Array,
-      required: true,
-    },
-    /**
-     * Values for ssh connection to server
-     */
-    sshConnectionInfo: {
-      type: Object || null,
+    server: {
+      type: Object as PropType<Server>,
       required: true,
     },
     /**
@@ -89,13 +76,13 @@ export default defineComponent({
      * Function for open terminal with custom command
      */
     openTerminal(): void {
-      if (!this.sshConnectionInfo) {
+      if (!this.server.sshConnectionInfo) {
         return;
       }
-      let command = `ssh ${this.sshConnectionInfo.username}@${this.sshConnectionInfo.ip}`;
+      let command = `ssh ${this.server.sshConnectionInfo.username}@${this.server.sshConnectionInfo.ip}`;
 
-      if (this.sshConnectionInfo.port) {
-        command += ` -p ${this.sshConnectionInfo.port}`;
+      if (this.server.sshConnectionInfo.port) {
+        command += ` -p ${this.server.sshConnectionInfo.port}`;
       }
 
       openSession(command);
