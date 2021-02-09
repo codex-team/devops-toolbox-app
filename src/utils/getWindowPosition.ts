@@ -1,7 +1,6 @@
 /**
  * Utilities to get taskbar position and consequently menubar's position
  */
-
 import { Rectangle, screen as electronScreen, Tray } from 'electron';
 
 const trayToScreenRects = (tray: Tray): [Rectangle, Rectangle] => {
@@ -32,7 +31,7 @@ export function taskbarLocation(tray: Tray): TaskbarLocation {
   const [screenBounds, workArea] = trayToScreenRects(tray);
 
   /**
-   TASKBAR LEFT
+   * TASKBAR LEFT
    */
   if (workArea.x > 0) {
     /**
@@ -42,7 +41,7 @@ export function taskbarLocation(tray: Tray): TaskbarLocation {
   }
 
   /**
-   TASKBAR TOP
+   * TASKBAR TOP
    */
   if (workArea.y > 0) {
     return 'top';
@@ -54,7 +53,6 @@ export function taskbarLocation(tray: Tray): TaskbarLocation {
    *  We can use the workarea and display width though.
    *  Determine taskbar location
    */
-
   if (workArea.width < screenBounds.width) {
     /**
      * The taskbar is either on the left or right, but since the LEFT case was handled above,
@@ -67,7 +65,6 @@ export function taskbarLocation(tray: Tray): TaskbarLocation {
    *  TASKBAR BOTTOM
    * Since all the other cases were handled, we can be sure we're dealing with a bottom taskbar
    */
-
   return 'bottom';
 }
 
@@ -86,20 +83,20 @@ export type WindowPosition = 'trayCenter'
 export function getWindowPosition(tray: Tray): WindowPosition {
   switch (process.platform) {
     /**
-     macOS
-     Supports top taskbars
+     * macOS
+     * Supports top taskbars
      */
     case 'darwin':
       return 'trayCenter';
     /**
-     Windows and Linux
-     Supports top/bottom/left/right taskbar, default bottom
+     * Windows and Linux
+     * Supports top/bottom/left/right taskbar, default bottom
      */
     default: {
       const traySide = taskbarLocation(tray);
 
       /**
-       Assign position for menubar
+       * Assign position for menubar
        */
       if (traySide === 'top') {
         return 'trayCenter';
@@ -117,7 +114,7 @@ export function getWindowPosition(tray: Tray): WindowPosition {
   }
 
   /**
-   When we really don't know, we just show the menubar on the top-right
+   * When we really don't know, we just show the menubar on the top-right
    */
   return 'topRight';
 }
