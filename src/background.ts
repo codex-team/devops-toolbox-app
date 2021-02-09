@@ -105,7 +105,10 @@ async function createWindow(): Promise<BrowserWindow> {
     if (win.isVisible()) {
       win.hide();
     } else {
-      win.setBounds(calcWindowBounds(getWindowPosition(tray), win, bounds, tray));
+      const windowPosition = getWindowPosition(tray);
+      const windowBounds = calcWindowBounds(windowPosition, win, bounds, tray);
+
+      win.setBounds(windowBounds);
       win.show();
     }
   });
