@@ -1,15 +1,22 @@
 <template>
   <div
     class="project"
-    :class="'project--status-'+(status ? 'ok' : 'warning')"
+    :class="{
+      'project--status-ok': status === true,
+      'project--status-warning': status === false,
+      'project--status-undefined': status === undefined
+    }"
   >
-    {{ name }}
-    <div class="project__status" />
+    {{ name || 'Unnamed host' }}
+    <div
+      v-if="status !== undefined"
+      class="project__status"
+    />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import {defineComponent} from 'vue';
 
 export default defineComponent({
   name: 'Project',
@@ -41,18 +48,21 @@ export default defineComponent({
   font-size: 14px;
   font-weight: 500;
 
-  &__status  {
+  &__status {
+    position: relative;
     width: 4px;
     height: 4px;
     margin-left: 5px;
     border-radius: 2px;
+    top: 2px;
   }
 
   &--status-warning {
     color: var(--color-text-warning);
   }
 
-  &--status-ok {
+  &--status-ok,
+  &--status-undefined {
     color: var(--color-text-second);
   }
 
@@ -62,7 +72,7 @@ export default defineComponent({
   }
 
   &--status-ok &__status {
-     background-color: var(--color-bg-success);
+    background-color: var(--color-bg-success);
   }
 }
 
