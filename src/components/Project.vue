@@ -3,8 +3,7 @@
     class="project"
     :class="{
       'project--status-ok': status === true,
-      'project--status-warning': status === false,
-      'project--status-undefined': status === undefined
+      'project--status-warning': status === false
     }"
   >
     {{ name || 'Unnamed host' }}
@@ -47,6 +46,7 @@ export default defineComponent({
   margin-bottom: 7px;
   font-size: 14px;
   font-weight: 500;
+  color: var(--color-text-second);
 
   &__status {
     position: relative;
@@ -59,11 +59,6 @@ export default defineComponent({
 
   &--status-warning {
     color: var(--color-text-warning);
-  }
-
-  &--status-ok,
-  &--status-undefined {
-    color: var(--color-text-second);
   }
 
   &--status-warning &__status {
