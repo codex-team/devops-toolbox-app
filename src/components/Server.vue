@@ -117,7 +117,7 @@ export default defineComponent({
   &__hotkey {
     margin-left: auto;
     letter-spacing: 0.35px;
-    color: var(--color-text-second);
+    color: color-mod(var(--color-text-second) alpha(30%));
   }
 }
 
