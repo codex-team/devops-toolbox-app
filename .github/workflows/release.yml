@@ -23,10 +23,10 @@ jobs:
           node-version: 15
 
       - name: Make envfile
-        uses: codex-team/action-create-env@v1
+        uses: ozaytsev86/create-env-file@v1
         with:
-          envkey_VUE_APP_API_URL: ${{ secrets.VUE_APP_API_URL }}
-          envkey_VUE_APP_AUTH_TOKEN: ${{ secrets.VUE_APP_AUTH_TOKEN }}
+          ENV_VUE_APP_API_URL: ${{ secrets.VUE_APP_API_URL }}
+          ENV_VUE_APP_AUTH_TOKEN: ${{ secrets.VUE_APP_AUTH_TOKEN }}
 
       - name: Build and release
         uses: samuelmeuli/action-electron-builder@v1
