@@ -22,6 +22,12 @@ jobs:
         with:
           node-version: 15
 
+      - name: Make envfile
+        uses: ozaytsev86/create-env-file@v1
+        with:
+          ENV_VUE_APP_API_URL: ${{ secrets.VUE_APP_API_URL }}
+          ENV_VUE_APP_AUTH_TOKEN: ${{ secrets.VUE_APP_AUTH_TOKEN }}
+
       - name: Build and release
         uses: samuelmeuli/action-electron-builder@v1
         with:
