@@ -3,7 +3,8 @@
     class="project"
     :class="{
       'project--status-ok': status === true,
-      'project--status-warning': status === false
+      'project--status-warning': status === false,
+      'project--clickable': name,
     }"
   >
     {{ name || 'Unnamed host' }}
@@ -47,6 +48,10 @@ export default defineComponent({
   font-size: 14px;
   font-weight: 500;
   color: var(--color-text-second);
+
+    &--clickable {
+      cursor: pointer;
+    }
 
   &__status {
     position: relative;
