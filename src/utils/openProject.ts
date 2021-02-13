@@ -1,4 +1,4 @@
-const shell = require('electron').shell;
+import { shell } from 'electron';
 
 /**
  * Function for opening project in the system default browser
