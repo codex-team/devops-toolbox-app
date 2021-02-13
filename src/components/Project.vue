@@ -18,7 +18,7 @@
 
 <script lang="ts">
 import {defineComponent} from 'vue';
-import openProject from '../utils/openProject';
+import openUrl from '../utils/openUrl';
 
 export default defineComponent({
   name: 'Project',
@@ -49,7 +49,7 @@ export default defineComponent({
       if (!this.name) {
         return;
       } else {
-        openProject(this.name);
+        openUrl('https://' + this.name);
       }
     },
   }
