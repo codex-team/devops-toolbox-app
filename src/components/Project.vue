@@ -70,6 +70,10 @@ export default defineComponent({
       cursor: pointer;
     }
 
+    &:hover {
+      color: var(--color-text-main);
+    }
+
   &__status {
     position: relative;
     width: 4px;
