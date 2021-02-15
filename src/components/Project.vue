@@ -70,7 +70,7 @@ export default defineComponent({
       cursor: pointer;
     }
 
-    &:hover {
+    &--clickable:hover {
       color: var(--color-text-main);
     }
 
