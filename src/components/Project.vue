@@ -3,8 +3,10 @@
     class="project"
     :class="{
       'project--status-ok': status === true,
-      'project--status-warning': status === false
+      'project--status-warning': status === false,
+      'project--clickable': name,
     }"
+    @click.native="openProject"
   >
     {{ name || 'Unnamed host' }}
     <div
@@ -16,6 +18,7 @@
 
 <script lang="ts">
 import {defineComponent} from 'vue';
+import openUrl from '../utils/openUrl';
 
 export default defineComponent({
   name: 'Project',
@@ -35,6 +38,21 @@ export default defineComponent({
       required: true,
     },
   },
+  /**
+   * Methods for processing activities
+   */
+  methods: {
+    /**
+     * Function for opening project in a browser
+     */
+    openProject(): void {
+      if (!this.name) {
+        return;
+      } else {
+        openUrl('https://' + this.name);
+      }
+    },
+  }
 });
 </script>
 
@@ -47,6 +65,14 @@ export default defineComponent({
   font-size: 14px;
   font-weight: 500;
   color: var(--color-text-second);
+
+    &--clickable {
+      cursor: pointer;
+    }
+
+    &--clickable:hover {
+      color: var(--color-text-main);
+    }
 
   &__status {
     position: relative;
