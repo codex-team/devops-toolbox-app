@@ -26,6 +26,8 @@ export function enableShortcuts(workspaces: Workspace[]): void {
             openSession(command);
           }
         });
+      } else {
+        return;
       }
     }
   }
