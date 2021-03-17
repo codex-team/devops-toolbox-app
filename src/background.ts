@@ -1,4 +1,4 @@
-import { app, protocol, BrowserWindow, Tray, Menu, MenuItemConstructorOptions, MenuItem } from 'electron';
+import { app, protocol, BrowserWindow, Tray, Menu, MenuItemConstructorOptions, MenuItem, ipcMain } from 'electron';
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib';
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer';
 import path from 'path';
@@ -50,6 +50,12 @@ const isDevelopment = process.env.NODE_ENV !== 'production';
  * Protocol name
  */
 const protocolName = 'app';
+
+let actualWorkspaces: Workspace[];
+
+ipcMain.on('shortcuts-workspaces', (event, data) => {
+  actualWorkspaces = data;
+});
 
 /**
  * Scheme must be registered before the app is ready
