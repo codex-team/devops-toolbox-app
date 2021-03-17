@@ -11,6 +11,8 @@ import calcWindowBounds from '@/utils/calcWindowBounds';
 import { getWindowPosition } from '@/utils/getWindowPosition';
 import isClickOnTray from '@/utils/isClickOnTray';
 import { enableAutoLaunch } from '@/utils/autolaunch';
+import { enableShortcuts, disableShortcuts} from '@/utils/shortcuts';
+import Workspace from '@/types/workspace';
 
 /**
  * Tray element
@@ -103,6 +105,7 @@ async function createWindow(): Promise<BrowserWindow> {
   tray.setIgnoreDoubleClickEvents(true);
   tray.on('click', (event, bounds) => {
     if (win.isVisible()) {
+      disableShortcuts();
       win.hide();
     } else {
       const windowPosition = getWindowPosition(tray);
@@ -119,6 +122,14 @@ async function createWindow(): Promise<BrowserWindow> {
     tray.popUpContextMenu(menu);
   });
 
+  win.on('focus', () => {
+    enableShortcuts(actualWorkspaces);
+  });
+
+  win.on('blur', () => {
+    disableShortcuts();
+  });
+
   return win;
 }
 
@@ -129,6 +140,7 @@ async function createWindow(): Promise<BrowserWindow> {
  */
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
+    disableShortcuts();
     app.quit();
   }
 });
@@ -239,6 +251,7 @@ app.on('ready', async () => {
   } catch (error) {
     logger.error(error);
 
+    disableShortcuts();
     app.quit();
   }
 });
@@ -250,11 +263,13 @@ if (isDevelopment) {
   if (process.platform === 'win32') {
     process.on('message', (data) => {
       if (data === 'graceful-exit') {
+        disableShortcuts();
         app.quit();
       }
     });
   } else {
     process.on('SIGTERM', () => {
+      disableShortcuts();
       app.quit();
     });
   }
