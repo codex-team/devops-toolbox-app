@@ -5,7 +5,7 @@ import Workspace from './../types/workspace';
 /**
  * Function to turn on shortcuts (Ctrl+1,2..), which open servers in console
  *
- * @param workspaces - workspaces information
+ * @param workspaces - workspaces information, updated by api
  */
 export function enableShortcuts(workspaces: Workspace[]): void {
   const SHORTCUTS_MAX = 9;
@@ -14,7 +14,6 @@ export function enableShortcuts(workspaces: Workspace[]): void {
   if (workspaces) {
     for (const workspace of workspaces) {
       for (const server of workspace.servers) {
-        console.dir(server);
         if (SHORTCUTS_COUNT < SHORTCUTS_MAX) {
           SHORTCUTS_COUNT++;
           globalShortcut.register(`CommandOrControl+${SHORTCUTS_COUNT}`, () => {
