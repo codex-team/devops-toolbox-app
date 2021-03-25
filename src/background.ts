@@ -53,7 +53,7 @@ const protocolName = 'app';
 
 let actualWorkspaces: Workspace[];
 
-ipcMain.on('shortcuts-workspaces', (event, data) => {
+ipcMain.on('shortcuts-update', (event, data) => {
   actualWorkspaces = data;
 });
 
