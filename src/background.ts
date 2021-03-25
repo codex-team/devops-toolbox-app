@@ -1,4 +1,4 @@
-import { app, protocol, BrowserWindow, Tray, Menu, MenuItemConstructorOptions, MenuItem, ipcMain } from 'electron';
+import { app, protocol, BrowserWindow, Tray, Menu, MenuItemConstructorOptions, MenuItem } from 'electron';
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib';
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer';
 import path from 'path';
@@ -11,8 +11,7 @@ import calcWindowBounds from '@/utils/calcWindowBounds';
 import { getWindowPosition } from '@/utils/getWindowPosition';
 import isClickOnTray from '@/utils/isClickOnTray';
 import { enableAutoLaunch } from '@/utils/autolaunch';
-import { enableServerConnectionShortcuts, disableShortcuts} from '@/utils/shortcuts';
-import Workspace from '@/types/workspace';
+import { initShortcutsWindow, disableShortcuts} from '@/utils/shortcuts';
 
 /**
  * Tray element
@@ -50,12 +49,6 @@ const isDevelopment = process.env.NODE_ENV !== 'production';
  * Protocol name
  */
 const protocolName = 'app';
-
-let actualWorkspaces: Workspace[];
-
-ipcMain.on('shortcuts-update', (event, data) => {
-  actualWorkspaces = data;
-});
 
 /**
  * Scheme must be registered before the app is ready
@@ -128,13 +121,11 @@ async function createWindow(): Promise<BrowserWindow> {
     tray.popUpContextMenu(menu);
   });
 
-  win.on('focus', () => {
-    enableServerConnectionShortcuts(actualWorkspaces);
-  });
-
   win.on('blur', () => {
     disableShortcuts();
   });
+
+  initShortcutsWindow(win);
 
   return win;
 }
