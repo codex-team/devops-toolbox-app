@@ -7,7 +7,7 @@ import Workspace from './../types/workspace';
  *
  * @param workspaces - workspaces information, updated by api
  */
-export function enableShortcuts(workspaces: Workspace[]): void {
+export function enableServerConnectionShortcuts(workspaces: Workspace[]): void {
   const SHORTCUTS_MAX = 9;
   let SHORTCUTS_COUNT = 0;
 

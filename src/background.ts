@@ -11,7 +11,7 @@ import calcWindowBounds from '@/utils/calcWindowBounds';
 import { getWindowPosition } from '@/utils/getWindowPosition';
 import isClickOnTray from '@/utils/isClickOnTray';
 import { enableAutoLaunch } from '@/utils/autolaunch';
-import { enableShortcuts, disableShortcuts} from '@/utils/shortcuts';
+import { enableServerConnectionShortcuts, disableShortcuts} from '@/utils/shortcuts';
 import Workspace from '@/types/workspace';
 
 /**
@@ -129,7 +129,7 @@ async function createWindow(): Promise<BrowserWindow> {
   });
 
   win.on('focus', () => {
-    enableShortcuts(actualWorkspaces);
+    enableServerConnectionShortcuts(actualWorkspaces);
   });
 
   win.on('blur', () => {
