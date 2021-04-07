@@ -43,6 +43,9 @@ export function enableServerConnectionShortcuts(workspaces: Workspace[]): void {
   if (workspaces) {
     for (const workspace of workspaces) {
       for (const server of workspace.servers) {
+        if (!server.sshConnectionInfo) {
+          continue;
+        }
         if (SHORTCUTS_COUNT < SHORTCUTS_MAX) {
           SHORTCUTS_COUNT++;
           bindServerConnectionShortcutKeys(server, SHORTCUTS_COUNT);
