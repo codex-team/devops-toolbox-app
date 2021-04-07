@@ -39,10 +39,12 @@ export default defineComponent({
   mounted() {
     ipcRenderer.on('workspaces-updated', (event, data) => {
       this.$store.commit('workspacesUpdate', data);
+      ipcRenderer.send('shortcuts-update', data);
     });
 
     ipcRenderer.on('workspace-updated', (event, data) => {
       this.$store.commit('workspaceUpdate', data);
+      ipcRenderer.send('shortcuts-update', data);
     });
   },
 });
